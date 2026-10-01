@@ -93,7 +93,25 @@ export class Stage {
     this.colliders = [];
     this.tags = this.tags.filter(t => t.el.isConnected);
   }
+  /** 도서관 방(scene: 'library') — 나무 바닥 + 둥근 깔개 + 낮은 벽(아래 나무 판, 위 크림) — 카메라가 돌아도 안이 보이게 벽은 낮게 */
+  buildRoom() {
+    const B = this.world.book, W = B.w, D = B.d, root = this.root;
+    this.pageMat = new T.MeshLambertMaterial();
+    const floor = this.page = new T.Mesh(new T.PlaneGeometry(W, D), this.pageMat);
+    floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; root.add(floor);
+    const wallH = 3.2, th = 0.7;
+    const walls = [[0, -D / 2 - th / 2, W + th * 2, th], [-W / 2 - th / 2, 0, th, D], [W / 2 + th / 2, 0, th, D], [0, D / 2 + th / 2, W + th * 2, th]];
+    walls.forEach(([x, z, w, d], i) => {
+      const h = i === 3 ? 0.5 : wallH;                                  // 앞(학생 쪽) 벽은 문턱만큼 낮게
+      const low = inked(new T.BoxGeometry(w, Math.min(1.3, h), d), '#8a5a3b', 1.01); low.traverse(m => { m.castShadow = false; }); low.position.set(x, Math.min(1.3, h) / 2, z); root.add(low);
+      if (h > 1.3) { const up = new T.Mesh(new T.BoxGeometry(w, h - 1.3, d), toon('#f3eedf')); up.position.set(x, 1.3 + (h - 1.3) / 2, z); up.receiveShadow = true; root.add(up); }
+      const cap = inked(new T.BoxGeometry(w + 0.1, 0.18, d + 0.12), '#6b4430', 1.02); cap.position.set(x, h + 0.09, z); root.add(cap);
+    });
+    const base = new T.Mesh(new T.BoxGeometry(W + 6, 0.6, D + 6), toon('#5c3d2a')); base.position.y = -0.31; base.receiveShadow = true; root.add(base);
+    const out = new T.Mesh(new T.PlaneGeometry(500, 500), new T.MeshLambertMaterial({ color: '#e8e1cf' })); out.rotation.x = -Math.PI / 2; out.position.y = -0.62; root.add(out);
+  }
   buildBook() {
+    if (this.world.scene === 'library') return this.buildRoom();
     const B = this.world.book, W = B.w, D = B.d, root = this.root;
     this.pageMat = new T.MeshLambertMaterial();
     const page = this.page = new T.Mesh(new T.PlaneGeometry(W, D), this.pageMat);
@@ -124,6 +142,7 @@ export class Stage {
     const cv = this.pageCanvas || (this.pageCanvas = document.createElement('canvas'));
     cv.width = W; cv.height = H;
     const c = cv.getContext('2d'), R = rng(B.seed || 7);
+    if (wd.scene === 'library') return this.paintFloor(c, W, H, R);
     const X = x => (x + B.w / 2) * PPU, Z = z => (z + B.d / 2) * PPU;
     c.fillStyle = '#fbf3df'; c.fillRect(0, 0, W, H);
     for (let i = 0; i < W * H / 290; i++) { c.fillStyle = `rgba(${150 + R() * 60},${120 + R() * 50},${80 + R() * 40},${R() * 0.05})`; c.fillRect(R() * W, R() * H, 1 + R() * 3, 1 + R() * 2); }
@@ -182,6 +201,29 @@ export class Stage {
     c.textAlign = 'center'; if (p1) c.fillText(`— ${p1} —`, W / 4, H - 0.8 * PPU); if (p2) c.fillText(`— ${p2} —`, W * 3 / 4, H - 0.8 * PPU);
     if (this.pageTex) this.pageTex.dispose();
     const tex = this.pageTex = new T.CanvasTexture(cv);
+    tex.colorSpace = T.SRGBColorSpace; tex.anisotropy = this.renderer.capabilities.getMaxAnisotropy();
+    this.pageMat.map = tex; this.pageMat.needsUpdate = true;
+  }
+
+  /** 도서관 바닥: 가로 나무 판(판마다 결·이음매) + 가운데 둥근 깔개(부기 숲색) */
+  paintFloor(c, W, H, R) {
+    const B = this.world.book, plank = 1.1 * PPU, tones = ['#c99b6b', '#c4955f', '#cfa474', '#bf8f5c'];
+    for (let y = 0, row = 0; y < H; y += plank, row++) {
+      let x = -(row % 3) * 2.2 * PPU;
+      while (x < W) { const len = (3 + R() * 4) * PPU; c.fillStyle = tones[Math.floor(R() * tones.length)]; c.fillRect(x, y, len, plank); c.strokeStyle = 'rgba(92,61,42,.35)'; c.lineWidth = 2; c.strokeRect(x, y, len, plank);
+        c.strokeStyle = 'rgba(92,61,42,.10)'; c.lineWidth = 1; for (let k = 0; k < 3; k++) { const yy = y + plank * (0.25 + k * 0.25) + (R() - 0.5) * 4; c.beginPath(); c.moveTo(x + 4, yy); c.bezierCurveTo(x + len * 0.3, yy + 3, x + len * 0.7, yy - 3, x + len - 4, yy); c.stroke(); }
+        x += len; }
+    }
+    const rug = B.rug || { x: 0, z: 2, r: 9 };
+    const cx = (rug.x + B.w / 2) * PPU, cz = (rug.z + B.d / 2) * PPU, r = rug.r * PPU;
+    c.save(); c.translate(cx, cz); c.scale(1.35, 1);
+    const ring = (rr, col) => { c.fillStyle = col; c.beginPath(); c.arc(0, 0, rr, 0, 7); c.fill(); };
+    ring(r, '#1d3a2a'); ring(r * 0.94, '#2f7d4f'); ring(r * 0.86, '#dfe8d8'); ring(r * 0.8, '#2f7d4f'); ring(r * 0.55, '#f7f4ec'); ring(r * 0.5, '#82a35e');
+    c.strokeStyle = '#f7f4ec'; c.lineWidth = 3; for (let i = 0; i < 24; i++) { const a = i / 24 * Math.PI * 2; c.beginPath(); c.moveTo(Math.cos(a) * r * 0.58, Math.sin(a) * r * 0.58); c.lineTo(Math.cos(a) * r * 0.78, Math.sin(a) * r * 0.78); c.stroke(); }
+    c.restore();
+    const g = c.createRadialGradient(W / 2, H / 2, H * 0.2, W / 2, H / 2, W * 0.7); g.addColorStop(0, 'rgba(255,240,200,0)'); g.addColorStop(1, 'rgba(60,40,20,0.22)'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+    if (this.pageTex) this.pageTex.dispose();
+    const tex = this.pageTex = new T.CanvasTexture(this.pageCanvas);
     tex.colorSpace = T.SRGBColorSpace; tex.anisotropy = this.renderer.capabilities.getMaxAnisotropy();
     this.pageMat.map = tex; this.pageMat.needsUpdate = true;
   }

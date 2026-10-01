@@ -41,7 +41,7 @@ for (const m of METHODS) Target.prototype[m] = function (...a) { return call(m, 
 
 function api() {
   const g = {};
-  for (const f of ['쪽', '목표', '도착', '누를때까지', '기다리기', '번쩍', '꽃가루', '카메라', '다짐', '끝내기', '고른말', '무작위', '카메라돌리기']) g[f] = (...a) => call(f, null, a);
+  for (const f of ['쪽', '목표', '도착', '누를때까지', '기다리기', '번쩍', '꽃가루', '카메라', '다짐', '끝내기', '고른말', '무작위', '카메라돌리기', '처음방문']) g[f] = (...a) => call(f, null, a);
   g.찾기 = name => new Target(String(name));
   g.따로 = fn => { if (typeof fn === 'function') run(fn); };
   g.누르면 = (t, fn) => { const key = 'click:' + t; handlers.set(key, fn); return call('누르면', null, [t]); };

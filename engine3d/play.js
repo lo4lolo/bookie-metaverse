@@ -4,6 +4,7 @@
  */
 import { T, rng } from './art3d.js';
 import { shade } from './objects.js';
+import { hasFinished, josa } from './gate.js';
 
 const WORKER = new URL('./runtime-worker.js', import.meta.url);
 const TONE = { 이야기: [1.0, 0.95], 토끼: [1.45, 1.05], 거북이: [0.7, 0.85], 부엉이: [1.1, 0.92], 나: [1.25, 1.0] };
@@ -20,6 +21,7 @@ function ui() {
       <button id="pLeft" title="화면 왼쪽으로 돌리기 (Q)">⟲</button>
       <button id="pRight" title="화면 오른쪽으로 돌리기 (E)">⟳</button>
       <button id="pVoice" title="읽어 주기 켜기/끄기">🔊</button>
+      <button id="pLib" title="부기 도서관으로" hidden>도서관</button>
       <button id="pHelp" title="도움말">❓</button>
     </div>
   </header>
@@ -64,7 +66,8 @@ export class Player {
     this.ff = resume && resume.page > 0 ? resume : null; this.ffAnswers = this.ff ? [...resume.answers] : [];
     this.rand = rng(this.run.seed);
     this.lastChoice = ''; this.goalTarget = null; this.arrival = null; this.clickWait = null; this.handlers = new Map(); this.nearState = new Map();
-    this.ended = false;
+    this.ended = false; this.gateBusy = false;
+    this.gates = [...S.objs.values()].filter(r => r.def.gate);
     for (const a of S.actors.values()) { a.place(a.data); a.show(true); a.sleep(false); a.anim = '자동'; a.scaleK = 1; a.lift = a.baseLift = a.data.lift || 0; a.flying = false; if (a.data.dir) a.look(a.data.dir); }
     for (const rec of S.objs.values()) { rec.g.visible = true; }
     if (S.me) { S.me.place(wd.player); S.me.show(true); }
@@ -202,8 +205,31 @@ export class Player {
       case '카메라돌리기': S.turn(Math.round((Number(a[0]) || 45) / 45)); return;
       case '무작위': { const lo = Math.ceil(Number(a[0]) || 0), hi = Math.floor(Number(a[1]) || 0); return lo + Math.floor(this.rand() * (hi - lo + 1)); }
       case '끝내기': this.ending(a[0] || {}); return;
+      case '처음방문': {   // 이 세계에 처음 왔으면 true(이 브라우저 기준) — 인사를 한 번만 하려고
+        const k = 'bookie-visited-' + S.world.id; let first = true;
+        try { first = !localStorage.getItem(k); localStorage.setItem(k, '1'); } catch (e) { /* */ }
+        return first;
+      }
     }
     throw new Error(`'${fn}'(은)는 모르는 명령이에요.`);
+  }
+
+  // ───── 책 문(도서관 → 책의 세계) ─────
+  async openGate(rec) {
+    this.gateBusy = true; me_stop(this.stage.me);
+    const o = rec.o, book = o.text || '이 책', who = this.stage.actors.has('사서') ? '사서' : '이야기';
+    try {
+      if (!o.world) {
+        await this.say(who, `『${book}』의 세계는 아직 만드는 중이에요. 조금만 기다려 줘요!`);
+      } else if (await hasFinished(this, who, book)) {
+        await this.say(who, `좋아요! 『${book}』 속으로 들어가 볼까요? 책장을 펼쳐요!`);
+        this.flash('책 속으로!');
+        if (this.opt.onGate) this.opt.onGate(o.world, book);
+        else setTimeout(() => { location.href = new URL(`../worlds/${encodeURIComponent(o.world)}/`, import.meta.url).href + '?go=1'; }, 700);
+      } else {
+        await this.say(who, `그럼 부기 도서관에서 『${book}』${josa(book, '을', '를')} 먼저 끝까지 읽고 와요. 다 읽으면 이 책 문이 열려요.`);
+      }
+    } finally { this.hideTalk(); this.gateBusy = false; }
   }
 
   // ───── 대화 ─────
@@ -334,6 +360,7 @@ export class Player {
     const target = hit ? (hit.actor || hit.obj) : null;
     if (this.clickWait && target && (this.clickWait.t === target)) { const c = this.clickWait; this.clickWait = null; c.res(); return; }
     if (name && this.handlers.has('click:' + name) && this.worker) { this.worker.postMessage({ t: 'event', key: 'click:' + name }); return; }
+    if (hit && hit.obj && hit.obj.def.gate && !this.nextWait && !this.choiceWait && !this.gateBusy) { this.openGate(hit.obj); return; }
     if (this.nextWait || this.choiceWait || this.locked || this.clickWait) return;
     const g = S.groundAt(x, y); if (g) S.me.walkTo([S.clamp(g)], 6.5);
   }
@@ -354,6 +381,13 @@ export class Player {
       const p = S.posOf(this.arrival.t);
       if (p && Math.hypot(me.pos.x - p.x, me.pos.z - p.z) < this.arrival.r) { const a = this.arrival; this.arrival = null; this.goal('', null); me.walkTo([]); a.res(); }
     }
+    if (this.gates && !this.locked && !this.nextWait && !this.choiceWait && !this.gateBusy) {
+      for (const g of this.gates) {
+        const near = Math.hypot(me.pos.x - g.o.x, me.pos.z - g.o.z) < 2.9 * (g.o.s || 1), key = 'gate:' + g.o.id, was = this.nearState.get(key);
+        this.nearState.set(key, near);
+        if (near && !was) { this.openGate(g); break; }
+      }
+    }
     for (const key of this.handlers.keys()) {
       if (!key.startsWith('near:')) continue;
       const t = S.find(key.slice(5)), p = S.posOf(t); if (!p) continue;
@@ -373,5 +407,6 @@ export class Player {
     }
   }
 }
+function me_stop(me) { if (me) { me.walkTo([]); me.extMoving = false; } }
 function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
 export { shade };

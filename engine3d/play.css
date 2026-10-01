@@ -115,3 +115,4 @@ button.big { border-radius: 8px; letter-spacing: -.01em; }
 #pPageNo { background: var(--brand); }
 #pFlash { color: var(--brand-deep); }
 #choices button:hover, #pChoices button:hover { background: var(--brand-soft); }
+#pTop .btns #pLib { width: auto; border-radius: 999px; padding: 0 16px; font: 800 15px var(--sans); background: var(--brand-deep); color: var(--on-brand); border-color: var(--brand-deep); }

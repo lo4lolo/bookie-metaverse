@@ -6,18 +6,19 @@ import { Player } from './play.js';
 
 const $ = id => document.getElementById(id);
 const BASE = new URL('../', import.meta.url).href;          // public/
+const LIB = BASE + 'worlds/library/?go=1';                   // 부기 도서관(책을 고르는 곳)
 
 function cover() {
   const d = document.createElement('section'); d.id = 'cover'; d.className = 'sheet';
   d.innerHTML = `<div class="paper">
-    <p class="small">📖 부기 메타버스 · 동화책 세계</p><h1 id="cTitle">…</h1>
+    <p class="small">부기 메타버스</p><h1 id="cTitle">…</h1>
     <p id="cLead">책을 펼치면 이야기 속으로 들어가요.</p>
     <div id="whoAmI"></div>
-    <div class="row"><button class="big" id="cOpen">📒 내 기록장 열기</button><button class="big soft" id="cGuest">👀 손님으로 들어가기</button></div>
+    <div class="row"><button class="big" id="cOpen">내 기록장 열기</button><button class="big soft" id="cGuest">손님으로 들어가기</button></div>
     <p class="small">기록장이 없으면 <a href="${BASE}avatar-maker.html" target="_blank">내 아바타·기록장 만들기</a>에서 먼저 만들어요.</p>
     <div class="row" id="cResumeRow" hidden><button class="big" id="cResume">이어서 읽기</button><button class="big soft" id="cRestart">처음부터 읽기</button></div>
     <p id="cMsg" class="small"></p>
-    <p class="small dim">움직이기: 땅을 누르거나 W A S D · 화면 돌리기: Q E 또는 끌기 · 확대: 휠<br><a id="cEdit" href="${BASE}maker.html?w=${encodeURIComponent(window.WORLD_ID || '')}">🛠 이 세계 고쳐 보기(세계 만들기)</a> · <a href="${BASE}worlds/index.html">📚 세계 도서관</a></p>
+    <p class="small dim">움직이기: 땅을 누르거나 W A S D · 화면 돌리기: Q E 또는 끌기 · 확대: 휠<br><a href="${LIB}">부기 도서관</a> · <a id="cEdit" href="${BASE}maker.html?w=${encodeURIComponent(window.WORLD_ID || '')}">이 세계 고쳐 보기</a></p>
   </div>`;
   document.body.append(d);
 }
@@ -45,14 +46,15 @@ export async function boot() {
   await stage.load(world, { student });
   stage.cam.follow = stage.me;
   const key = 'seoksan-progress-' + world.id;
-  const player = new Player(stage, { student, progressKey: key, links: `<a href="${BASE}index.html">처음 화면으로</a> · <a href="${BASE}avatar-maker.html">내 아바타·기록장</a>` });
+  const player = new Player(stage, { student, progressKey: key, links: world.id === 'library' ? '' : `<a href="${LIB}">부기 도서관으로 돌아가기</a> · <a href="${BASE}avatar-maker.html">내 아바타·기록장</a>` });
+  if (world.id !== 'library') { const b = $('pLib'); b.hidden = false; b.onclick = () => { location.href = LIB; }; }
   window.__play = { stage, player };
   const showWho = () => {
     const box = $('whoAmI'); box.innerHTML = '';
     if (!student) return;
     box.append(AvatarV5.canvas(student.avatar.colors));
     const t = document.createElement('div'); t.innerHTML = `<b>${student.student.name}</b>의 기록장을 열었어요.<br><span class="small">확인된 포인트 ${student.points.confirmed} · 보류 ${student.points.pending}</span>`; box.append(t);
-    $('cOpen').textContent = '📖 이 기록장으로 읽기'; $('cOpen').dataset.ready = '1';
+    $('cOpen').textContent = '이 기록장으로 들어가기'; $('cOpen').dataset.ready = '1';
   };
   showWho();
   let prev = null; try { prev = JSON.parse(localStorage.getItem(key) || 'null'); } catch (e) { /* */ }
@@ -69,5 +71,7 @@ export async function boot() {
   };
   $('cGuest').onclick = () => { student = null; begin(false); };
   $('cResume').onclick = () => begin(true);
+  // 도서관 책 문에서 왔으면 표지 없이 바로(이어 읽을 쪽이 있으면 이어서)
+  if (params.get('go')) begin(!!(prev && prev.page > 1));
   $('cRestart').onclick = () => begin(false);
 }

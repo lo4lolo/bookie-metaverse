@@ -27,9 +27,78 @@ export function shade(hex, k) {
   return '#' + c.getHexString();
 }
 
-export const CATS = ['자연', '길·물', '표지', '집·소품', '배경'];
+export const CATS = ['도서관', '자연', '길·물', '표지', '집·소품', '배경'];
 
 export const LIB = {
+  // ───── 도서관 ─────
+  bookshelf: {
+    name: '책장', icon: '📚', cat: '도서관', def: { s: 1, w: 6, h: 4.2, color: '#8a5a3b', seed: 3 }, props: ['w', 'h', 'r', 'color', 'seed'], solid: 0,
+    build(o) {
+      const g = new T.Group(), w = o.w || 6, h = o.h || 4.2, d = 1.1, wood = o.color || '#8a5a3b', R = rng(o.seed || 3);
+      const back = inked(new T.BoxGeometry(w, h, 0.2), shade(wood, 0.8), 1.02); back.position.set(0, h / 2, -d / 2 + 0.1); g.add(back);
+      for (const k of [-1, 1]) { const side = inked(new T.BoxGeometry(0.25, h, d), wood, 1.04); side.position.set(k * (w / 2 - 0.12), h / 2, 0); g.add(side); }
+      const rows = Math.max(2, Math.round(h / 1.05));
+      const spine = ['#c0563f', '#d59a3a', '#82a35e', '#479b94', '#5d87ab', '#8c6193', '#e9dcc1', '#2f7d4f', '#cf7150', '#f1cd8d'];
+      for (let r = 0; r <= rows; r++) {
+        const y = (h * r) / rows; const sh = inked(new T.BoxGeometry(w - 0.3, 0.14, d), shade(wood, 1.1), 1.03); sh.position.set(0, y + 0.07, 0); g.add(sh);
+        if (r === rows) break;
+        let x = -w / 2 + 0.3; const top = (h / rows) * 0.92;
+        while (x < w / 2 - 0.45) {
+          const bw = 0.16 + R() * 0.16, bh = top * (0.6 + R() * 0.35), tilt = R() < 0.08;
+          const b = new T.Mesh(new T.BoxGeometry(bw, bh, d * 0.75), toon(spine[Math.floor(R() * spine.length)]));
+          b.position.set(x + bw / 2, y + 0.14 + bh / 2, 0.05); if (tilt) b.rotation.z = 0.18; b.castShadow = true; g.add(b);
+          x += bw + 0.03 + (R() < 0.12 ? 0.3 : 0);
+        }
+      }
+      return g;
+    },
+  },
+  readingtable: {
+    name: '읽기 탁자', icon: '🪑', cat: '도서관', def: { s: 1, color: '#a8764b' }, props: ['s', 'r', 'color'], solid: 1.2,
+    build(o) {
+      const g = new T.Group(), wood = o.color || '#a8764b';
+      const top = inked(new T.CylinderGeometry(1.4, 1.4, 0.16, 20), wood, 1.04); top.position.y = 1.1; g.add(top);
+      const leg = inked(new T.CylinderGeometry(0.16, 0.24, 1.05, 8), shade(wood, 0.8)); leg.position.y = 0.53; g.add(leg);
+      for (let i = 0; i < 3; i++) { const a = i * 2.1 + 0.4; const st = inked(new T.CylinderGeometry(0.42, 0.42, 0.55, 12), '#dfe8d8', 1.06); st.position.set(Math.cos(a) * 1.9, 0.28, Math.sin(a) * 1.9); g.add(st); }
+      const book = new T.Mesh(new T.BoxGeometry(0.7, 0.08, 0.5), toon('#f7f4ec')); book.position.set(0.2, 1.22, 0.1); book.rotation.y = 0.4; g.add(book);
+      const cov = new T.Mesh(new T.BoxGeometry(0.74, 0.04, 0.54), toon('#2f7d4f')); cov.position.set(0.2, 1.17, 0.1); cov.rotation.y = 0.4; g.add(cov);
+      return g;
+    },
+  },
+  lamp: {
+    name: '스탠드', icon: '💡', cat: '도서관', def: { s: 1, color: '#f1cd8d' }, props: ['s', 'color'], solid: 0.3,
+    build(o) {
+      const g = new T.Group();
+      const base = inked(new T.CylinderGeometry(0.35, 0.45, 0.15, 12), '#3d2c1d'); base.position.y = 0.08; g.add(base);
+      const pole = new T.Mesh(new T.CylinderGeometry(0.05, 0.05, 2.8, 6), toon('#3d2c1d')); pole.position.y = 1.5; g.add(pole);
+      const shadeM = inked(new T.CylinderGeometry(0.35, 0.65, 0.6, 14, 1, true), o.color || '#f1cd8d', 1.05); shadeM.position.y = 2.9; g.add(shadeM);
+      const glow = new T.Mesh(new T.SphereGeometry(0.9, 14, 10), new T.MeshBasicMaterial({ color: '#fff3c4', transparent: true, opacity: 0.22, depthWrite: false })); glow.position.y = 2.8; g.add(glow);
+      return g;
+    },
+  },
+  plant: {
+    name: '화분', icon: '🪴', cat: '도서관', def: { s: 1, color: '#6fae5a' }, props: ['s', 'color'], solid: 0.4,
+    build(o) {
+      const g = new T.Group();
+      const pot = inked(new T.CylinderGeometry(0.45, 0.32, 0.7, 12), '#cf7150', 1.06); pot.position.y = 0.35; g.add(pot);
+      [[0, 1.2, 0, 0.55], [-0.35, 0.95, 0.15, 0.4], [0.35, 1.0, -0.1, 0.42]].forEach(([x, y, z, r]) => { const l = inked(new T.SphereGeometry(r, 12, 8), o.color || '#6fae5a', 1.08); l.position.set(x, y, z); g.add(l); });
+      return g;
+    },
+  },
+  bookgate: {
+    name: '책 문(세계로 가는 책)', icon: '📖', cat: '도서관', def: { s: 1, text: '책 제목', color: '#cf7150', world: '' }, props: ['text', 'world', 'color', 'r'], solid: 1.1, gate: true,
+    build(o) {
+      const g = new T.Group(), col = o.color || '#cf7150', ready = !!o.world;
+      const ped = inked(new T.CylinderGeometry(1.1, 1.3, 0.6, 16), '#efeadd', 1.04); ped.position.y = 0.3; g.add(ped);
+      // 세워 둔 큰 책(표지 + 종이 두께)
+      const cover = inked(new T.BoxGeometry(2.3, 3.0, 0.22), ready ? col : '#c9c2b4', 1.04); cover.position.set(0, 2.15, 0); cover.rotation.x = -0.12; g.add(cover);
+      const pages = new T.Mesh(new T.BoxGeometry(2.1, 2.85, 0.24), toon('#fffdf9')); pages.position.set(0.06, 2.15, -0.1); pages.rotation.x = -0.12; g.add(pages);
+      const lab = banner(o.text || '', 2.0, 0.62, '#fffdf9', ready ? '#1d3a2a' : '#8a9084'); lab.position.set(0, 2.55, 0.16); lab.rotation.x = -0.12; g.add(lab);
+      const badge = banner(ready ? '들어가기' : '준비 중', 1.3, 0.36, ready ? '#1d3a2a' : '#e6e1d4', ready ? '#f2f6ef' : '#8a9084'); badge.position.set(0, 1.45, 0.24); badge.rotation.x = -0.12; g.add(badge);
+      if (ready) { const ring = new T.Mesh(new T.RingGeometry(1.5, 1.85, 40), new T.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.55, depthWrite: false })); ring.rotation.x = -Math.PI / 2; ring.position.y = 0.05; ring.userData.pulse = true; g.add(ring); }
+      return g;
+    },
+  },
   tree: { name: '몽글 나무', icon: '🌳', cat: '자연', def: { s: 1, color: '#6fae5a' }, props: ['s', 'r', 'color'], solid: 0.75, build: o => roundTree(o, false) },
   appletree: { name: '사과나무', icon: '🍎', cat: '자연', def: { s: 1.4, color: '#6fae5a' }, props: ['s', 'r', 'color'], solid: 0.75, build: o => roundTree(o, true) },
   pine: {
