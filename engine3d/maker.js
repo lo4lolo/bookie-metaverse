@@ -538,6 +538,7 @@ async function stopPlay() {
   const tab = st.returnTab || 'map'; st.tab = null; await showTab(tab);
 }
 $('mPlay').onclick = play;
+$('mWorkshop').onclick = () => { if (!st.playing) workshop(); };
 $('mErr').onclick = async () => { const n = +$('mErr').dataset.line; if (st.playing) await stopPlay(); await showTab('code'); clearMarks(); markLine(n, 'err-line'); };
 
 // ───── 파일 ─────
@@ -596,4 +597,5 @@ $('mHelpBtn').onclick = () => { $('mHelp').hidden = false; }; $('mHelpClose').on
   } else if (auto && auto.world) w = auto.world;
   await openWorld(w || starter(), w ? '' : '새 세계예요. 왼쪽에서 물건을 골라 놓아 보세요');
   window.__maker = { st, stage, player, showTab, flushBlocks };
+  if (new URLSearchParams(location.search).get('workshop')) workshop();   // 첫 화면 「도트 공방」에서 바로 열기
 })();

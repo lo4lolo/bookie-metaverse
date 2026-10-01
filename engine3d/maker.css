@@ -9,6 +9,7 @@ body.maker { overflow: hidden; }
 #mTitle { font: 18px 'Jua', sans-serif; border: 2px solid var(--ink); border-radius: 10px; padding: 4px 10px; width: 11em; background: #fff; }
 #mTabs { display: flex; gap: 4px; margin-left: 6px; }
 #mTabs button.on { background: var(--gold); }
+#mWorkshop { background: #f7d6e6 !important; }
 #mPlay.play { background: #8fd18a; font-family: 'Jua', sans-serif; font-size: 18px; }
 #mPlay.stop { background: var(--red); color: #fff; }
 #mErr { background: #fff0ec; color: #a0362a; border: 2px solid var(--red); border-radius: 10px; padding: 3px 10px; font-size: 14px; max-width: 30vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
@@ -22,7 +23,7 @@ body.maker { overflow: hidden; }
 #mViewBtns button { border: 2px solid var(--ink); border-radius: 12px; background: var(--paper); font-size: 17px; padding: 4px 10px; box-shadow: var(--shadow); }
 #mHint { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); background: rgba(251, 245, 230, .95); border: 2px solid var(--ink); border-radius: 12px; padding: 4px 12px; font-size: 15px; z-index: 6; pointer-events: none; }
 #mHint:empty { display: none; }
-body.playing #mPalette, body.playing #mProps, body.playing #mViewBtns, body.playing #mHint, body.playing #mTabs, body.playing #mUndo, body.playing #mRedo, body.playing #mNew, body.playing #mOpen, body.playing #mShare { display: none; }
+body.playing #mPalette, body.playing #mProps, body.playing #mViewBtns, body.playing #mHint, body.playing #mTabs, body.playing #mUndo, body.playing #mRedo, body.playing #mNew, body.playing #mOpen, body.playing #mShare, body.playing #mWorkshop { display: none; }
 body.playing #pTop { top: 66px; }
 
 /* 왼쪽 도감 */

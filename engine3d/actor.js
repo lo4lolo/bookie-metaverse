@@ -110,7 +110,9 @@ export class Actor {
     }
     this.t += dt;
     const a = this.anim, stepping = a === '걷기' || a === '깡충' || (a === '자동' && walking);
-    let col = a === '프레임' ? this.frameNo : stepping ? 1 + (Math.floor(this.t / 0.14) % 2) : 0;
+    // 4박자 걸음: 내딛기1 · 지나가기(서기) · 내딛기2 · 지나가기 — 빠르게 걸으면 박자도 빨라진다
+    const beat = this.speed > 5 && this.moving ? 0.09 : 0.12;
+    let col = a === '프레임' ? this.frameNo : stepping ? [1, 0, 2, 0][Math.floor(this.t / beat) % 4] : 0;
     if (this.sheet) this.tex.offset.set(col / 3, 1 - (ROW[this.dir] + 1) / 3);
     if (this.acc.length) {
       const fast = this.flying || this.jumpT >= 0 || this.anim === '깡충' || (walking && this.speed > 5.5);
@@ -126,7 +128,8 @@ export class Actor {
     // 위아래(걸음 통통·깡충·뛰기·날기)
     const targetLift = this.flying ? 3 : this.baseLift;
     this.lift += (targetLift - this.lift) * Math.min(1, dt * 5);
-    let hop = (a === '자동' && walking && !this.flying) || a === '걷기' ? Math.abs(Math.sin(this.t * 11)) * this.hopK : 0;
+    const stepPhase = (this.t - beat / 2) * Math.PI / (beat * 2);      // 지나가기 칸 한가운데서 가장 높이
+    let hop = (a === '자동' && walking && !this.flying) || a === '걷기' ? Math.abs(Math.sin(stepPhase)) * this.hopK : 0;
     if (a === '깡충') hop = Math.abs(Math.sin(this.t * 6)) * 0.9;
     if (this.jumpT >= 0) {
       this.jumpT += dt; const k = this.jumpT / 0.5;
@@ -135,6 +138,7 @@ export class Actor {
     }
     this.mesh.position.y = this.lift + hop + (this.sleeping ? 0.75 : 0);
     let roll = this.sleeping ? Math.PI / 2 * 0.92 : 0, sx = this.flip ? -1 : 1;
+    if (stepping && !this.sleeping && !this.flying) roll += Math.sin(this.t * Math.PI / (beat * 2)) * 0.045;   // 걸을 때 좌우로 살짝 뒤뚱
     if (a === '흔들') roll += Math.sin(this.t * 9) * 0.18;
     if (a === '빙글') sx *= Math.cos(this.t * 6);
     this.mesh.rotation.set(0, yaw, roll);
