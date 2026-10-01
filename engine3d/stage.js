@@ -37,7 +37,7 @@ export class Stage {
     r.setPixelRatio(Math.min(2, devicePixelRatio)); r.outputColorSpace = T.SRGBColorSpace;
     r.shadowMap.enabled = true; r.shadowMap.type = T.PCFSoftShadowMap;
     const s = this.scene = new T.Scene();
-    const BG = new T.Color('#eadcbf'); s.background = BG; s.fog = new T.Fog(BG, 80, 170);
+    const BG = new T.Color('#efeadd'); s.background = BG; s.fog = new T.Fog(BG, 80, 170);
     this.camera = new T.PerspectiveCamera(34, 1, 0.5, 500);
     s.add(new T.HemisphereLight('#fff6e4', '#b59a72', 1.6));
     const sun = this.sun = new T.DirectionalLight('#fff1d6', 1.9);
@@ -64,7 +64,7 @@ export class Stage {
   // ───── 세계 세우기 ─────
   async load(world, { student = null } = {}) {
     this.world = world;
-    await Promise.all([document.fonts.load('40px "Gowun Dodum"'), document.fonts.load('40px Jua')]).catch(() => null);
+    await Promise.all([document.fonts.load('40px "Noto Serif KR"'), document.fonts.load('800 40px Pretendard')]).catch(() => null);
     this.clear();
     this.buildBook();
     this.repaint();
@@ -172,10 +172,10 @@ export class Stage {
     c.fillStyle = g; c.fillRect(W / 2 - 3 * PPU, 0, 6 * PPU, H);
     const tx = B.texts || {};
     c.fillStyle = 'rgba(74,52,38,0.75)'; c.textBaseline = 'middle';
-    c.font = `${0.62 * PPU}px "Gowun Dodum", sans-serif`;
+    c.font = `${0.62 * PPU}px "Noto Serif KR", serif`;
     c.textAlign = 'left'; c.fillText(tx.tl || '', 2 * PPU, 0.8 * PPU);
     c.textAlign = 'right'; c.fillText(tx.tr || '', W - 2 * PPU, 0.8 * PPU);
-    c.font = `${0.58 * PPU}px "Gowun Dodum", sans-serif`;
+    c.font = `${0.58 * PPU}px "Noto Serif KR", serif`;
     c.textAlign = 'left'; c.fillText(tx.bl || '', 2 * PPU, H - 0.8 * PPU);
     c.textAlign = 'right'; c.fillText(tx.br || '', W - 2 * PPU, H - 0.8 * PPU);
     const [p1, p2] = B.pages || [];

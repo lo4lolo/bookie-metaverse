@@ -73,25 +73,25 @@ function html() {
   .wsHead { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
   .wsHead h2 { margin: 0 6px 0 0; }
   .wsHead .grow { flex: 1; }
-  .wsHead select, .wsHead input, .wsPrev select { font: inherit; border: 2px solid var(--ink); border-radius: 10px; padding: 3px 8px; }
+  .wsHead select, .wsHead input, .wsPrev select { font: inherit; border: 1px solid var(--line); border-radius: 10px; padding: 3px 8px; }
   .wsBody { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; }
   .wsLayers { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 6px; }
-  .wsLayers button { border: 2px solid var(--ink); border-radius: 999px; background: #fff; padding: 2px 10px; font-size: 14px; }
-  .wsLayers button.on { background: var(--red); color: #fff; }
+  .wsLayers button { border: 1px solid var(--line); border-radius: 999px; background: #fff; padding: 2px 10px; font-size: 14px; }
+  .wsLayers button.on { background: var(--brand-deep); color: var(--on-brand); }
   .wsTools { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; margin-bottom: 6px; }
-  .wsTools button, .wsBtns button { border: 2px solid var(--ink); border-radius: 10px; background: #fff; padding: 3px 9px; font-size: 15px; }
+  .wsTools button, .wsBtns button { border: 1px solid var(--line); border-radius: 10px; background: #fff; padding: 3px 9px; font-size: 15px; }
   .wsTools button.on { background: var(--gold); }
-  .wsTools input[type=color] { width: 44px; height: 32px; border: 2px solid var(--ink); border-radius: 8px; }
-  #wsBig { width: ${CELL * Z}px; max-width: 100%; image-rendering: pixelated; border: 2px solid var(--ink); border-radius: 8px; cursor: crosshair; touch-action: none; background: #fff; }
-  #wsSheet { width: 320px; image-rendering: pixelated; border: 2px solid var(--ink); border-radius: 8px; cursor: pointer; background: #f3e8cf; }
+  .wsTools input[type=color] { width: 44px; height: 32px; border: 1px solid var(--line); border-radius: 8px; }
+  #wsBig { width: ${CELL * Z}px; max-width: 100%; image-rendering: pixelated; border: 1px solid var(--line); border-radius: 8px; cursor: crosshair; touch-action: none; background: #fff; }
+  #wsSheet { width: 320px; image-rendering: pixelated; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; background: #f3e8cf; }
   .wsPrev { display: flex; gap: 10px; align-items: center; margin: 8px 0; }
-  #wsAnim { width: 120px; height: 120px; image-rendering: pixelated; background: radial-gradient(#fff8e6, #f0e2c2); border: 2px solid var(--ink); border-radius: 12px; }
+  #wsAnim { width: 120px; height: 120px; image-rendering: pixelated; background: radial-gradient(#fff8e6, #f0e2c2); border: 1px solid var(--line); border-radius: 12px; }
   .wsPrev label { display: block; font-size: 14px; margin: 2px 0; }
   #wsColors { display: flex; flex-wrap: wrap; gap: 5px; max-width: 340px; }
-  #wsColors button { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--ink); }
+  #wsColors button { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); }
   .wsOpts label { display: block; font-size: 14px; }
   .wsBtns { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
-  .wsRules { background: #fff8e0; border: 2px dashed #e8b84a; border-radius: 12px; padding: 6px 10px; font-size: 13.5px; line-height: 1.5; max-width: 360px; }
+  .wsRules { background: var(--surface-soft); border: 1px dashed var(--brand); border-radius: 12px; padding: 6px 10px; font-size: 13.5px; line-height: 1.5; max-width: 360px; }
   .wsRules b { color: var(--red); }
   #wsWarn { color: #a0362a; max-width: ${CELL * Z}px; }`;
   document.head.append(css);
@@ -207,7 +207,7 @@ function redraw() {
   const s = $('wsSheet').getContext('2d'); s.imageSmoothingEnabled = false; s.clearRect(0, 0, 384, 384);
   for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) { cell.getContext('2d').clearRect(0, 0, CELL, CELL); composite(cell, r, c); s.drawImage(cell, c * 128, r * 128, 128, 128); }
   const cols = LAYERS[W.layer].cols, lock = W.v5 && W.layer === 'body';
-  s.font = '14px "Gowun Dodum"';
+  s.font = '700 14px Pretendard';
   for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) {
     const auto = lock && (c > 0 || r === 1);
     if (auto) { s.fillStyle = 'rgba(243,232,207,0.55)'; s.fillRect(c * 128, r * 128, 128, 128); }

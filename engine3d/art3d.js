@@ -72,8 +72,8 @@ export function banner(text, w, h, bg, fg) {
   const c = document.createElement('canvas'); c.width = 512; c.height = Math.max(32, Math.round(512 * h / w));
   const x = c.getContext('2d'); x.fillStyle = bg; x.fillRect(0, 0, c.width, c.height);
   x.strokeStyle = INK_COLOR; x.lineWidth = 10; x.strokeRect(5, 5, c.width - 10, c.height - 10);
-  let size = c.height * 0.55; x.font = `${size}px Jua, sans-serif`;
-  while (x.measureText(text).width > c.width - 40 && size > 12) { size -= 4; x.font = `${size}px Jua, sans-serif`; }
+  let size = c.height * 0.55; x.font = `800 ${size}px Pretendard, sans-serif`;
+  while (x.measureText(text).width > c.width - 40 && size > 12) { size -= 4; x.font = `800 ${size}px Pretendard, sans-serif`; }
   x.fillStyle = fg; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(text, c.width / 2, c.height * 0.55);
   const t = new T.CanvasTexture(c); t.colorSpace = T.SRGBColorSpace;
   const g = new T.Group(), mat = new T.MeshLambertMaterial({ map: t });

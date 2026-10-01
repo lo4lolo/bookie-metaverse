@@ -4,43 +4,48 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>세계 도서관 · 부기 메타버스</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Cormorant+Garamond:ital,wght@1,500&display=swap">
+  <link rel="stylesheet" href="../css/bookie.css">
   <style>
-    :root { --paper: #fbf5e6; --ink: #4a3426; --red: #d9634f; --gold: #e8b84a; --shadow: 0 6px 0 rgba(74,52,38,.18), 0 14px 28px rgba(74,52,38,.2); }
+    :root { --red: var(--brand); --gold: var(--brand-deep); --shadow: var(--shadow-sm); }
     * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; background: #eadcbf; color: var(--ink); font: 17px/1.6 'Gowun Dodum', 'Malgun Gothic', sans-serif; padding: 16px; }
-    h1 { font: 42px 'Jua', sans-serif; color: var(--red); text-align: center; margin: 4px 0; }
+    body { margin: 0; min-height: 100vh; background: var(--paper); color: var(--ink); font: 17px/1.6 var(--sans); padding: 16px; }
+    h1 { font: 800 42px var(--sans); color: var(--red); text-align: center; margin: 4px 0; }
     .lead { text-align: center; margin: 0 0 14px; }
     .bar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 16px; }
-    .bar a, .bar button, .card a, .card button { font: 17px 'Jua', sans-serif; border: 2px solid var(--ink); border-radius: 12px; background: #fff; padding: 6px 14px; color: var(--ink); text-decoration: none; cursor: pointer; }
+    .bar a, .bar button, .card a, .card button { font: 800 17px var(--sans); border: 1px solid var(--line); border-radius: 12px; background: #fff; padding: 6px 14px; color: var(--ink); text-decoration: none; cursor: pointer; }
     .bar .main { background: var(--gold); }
-    h2 { font: 24px 'Jua', sans-serif; font-weight: normal; max-width: 1000px; margin: 18px auto 8px; }
+    h2 { font: 700 24px var(--serif); color: var(--brand-deep); max-width: 1000px; margin: 18px auto 8px; }
     .grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
-    .card { background: var(--paper); border: 3px solid var(--ink); border-radius: 18px; padding: 12px 14px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 6px; }
-    .card b { font: 22px 'Jua', sans-serif; font-weight: normal; }
+    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 12px 14px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 6px; }
+    .card b { font: 800 22px var(--sans); font-weight: normal; }
     .card .meta { font-size: 14px; opacity: .8; }
     .card .row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: auto; }
-    .card a.play { background: #8fd18a; }
+    .card a.play { background: var(--brand-deep); color: var(--on-brand); border-color: var(--brand-deep); }
     .card button.del { background: #ffe1da; font-size: 14px; }
     .empty { text-align: center; opacity: .75; }
     #msg { text-align: center; min-height: 1.5em; }
+    h1 { font-family: var(--serif) !important; font-weight: 700 !important; color: var(--brand-deep) !important; }
+    .card, .paper { border-radius: var(--radius); }
+    button.big, .bar .main { background: var(--brand-deep) !important; color: var(--on-brand) !important; }
+    button.big.soft { background: var(--card) !important; color: var(--ink) !important; }
   </style>
 </head>
-<body>
-  <h1>📚 세계 도서관</h1>
+<body class="bk-paper">
+  <header class="bk-site" style="margin:-16px -16px 24px"><div class="bk-wrap bk-head"><a class="bk-brand" href="../home.html"><img src="../assets/brand/bookie-wordmark.png" alt="부기" width="70" height="46"><span class="sl"><b>메타버스</b>세계 도서관</span></a><span style="flex:1"></span><a class="bk-ghost" href="../avatar-maker.html">내 아바타·기록장</a><a class="bk-btn" href="../maker.html">새 세계 만들기</a></div></header>
+  <div class="bk-eyebrow" style="text-align:center">Story library</div>
+  <h1>세계 도서관</h1>
   <p class="lead">선생님이 만든 동화책과, 우리 반 친구들이 만든 세계가 모여 있어요.<br>누르면 들어가 놀고, 「고쳐 보기」로 내 세계의 바탕으로 쓸 수 있어요.</p>
   <div class="bar">
-    <a class="main" href="../maker.html">🛠 새 세계 만들기</a>
-    <a href="../maker.html?workshop=1">🎨 도트 공방</a>
-    <button id="openFile">📂 세계 파일로 놀기</button>
-    <a href="../avatar-maker.html">내 아바타·기록장</a>
-    <a href="../index.html">처음 화면</a>
+    <a href="../maker.html?workshop=1">도트 공방</a>
+    <button id="openFile">세계 파일로 놀기</button>
+    <a href="../home.html">처음 화면</a>
   </div>
   <p id="msg"></p>
-  <h2>📕 동화책</h2>
+  <h2>동화책</h2>
   <div class="grid" id="books"></div>
-  <h2>🧒 우리 반이 만든 세계</h2>
+  <h2>우리 반이 만든 세계</h2>
   <div class="grid" id="class"></div>
   <script>
   (async () => {
@@ -58,11 +63,11 @@
     const card = w => {
       const q = w.kind === 'class' ? `share=${encodeURIComponent(w.key)}` : `w=${encodeURIComponent(w.key)}`;
       return `<div class="card"><b>${esc(w.title)}</b><span class="meta">${esc(w.author || '')}${w.at ? ' · ' + esc(w.at) : ''}<br>물건 ${w.objects} · 인물 ${w.actors}</span>
-        <div class="row"><a class="play" href="play.html?${q}">▶ 놀기</a><a href="../maker.html?${q}">🛠 고쳐 보기</a>${teacher && w.kind === 'class' ? `<button class="del" data-key="${esc(w.key)}">지우기</button>` : ''}</div></div>`;
+        <div class="row"><a class="play" href="play.html?${q}">읽기</a><a href="../maker.html?${q}">고쳐 보기</a>${teacher && w.kind === 'class' ? `<button class="del" data-key="${esc(w.key)}">지우기</button>` : ''}</div></div>`;
     };
     const books = list.filter(w => w.kind === 'book'), cls = list.filter(w => w.kind === 'class');
     $('books').innerHTML = books.map(card).join('') || '<p class="empty">아직 없어요.</p>';
-    $('class').innerHTML = cls.map(card).join('') || '<p class="empty">아직 올린 세계가 없어요. 세계 만들기에서 「📤 반에 올리기」를 눌러 보세요.</p>';
+    $('class').innerHTML = cls.map(card).join('') || '<p class="empty">아직 올린 세계가 없어요. 세계 만들기에서 「반에 올리기」를 눌러 보세요.</p>';
     $('class').onclick = async e => {
       const b = e.target.closest('button.del'); if (!b || !confirm('이 세계를 도서관에서 지울까요?')) return;
       const r = await fetch('../api/worlds/delete', { method: 'POST', headers: { 'X-Token': token, 'Content-Type': 'application/json' }, body: JSON.stringify({ key: b.dataset.key }) }).then(r => r.json());

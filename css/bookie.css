@@ -1,0 +1,41 @@
+/* 부기(Bookie) 디자인 — bookie.io.kr "숲과 종이"와 같은 값.
+ * 원본: 09_Make/00_bookie (build.js · css/styles.css). 바꿀 때는 그쪽과 맞춘다.
+ * 글꼴: UI·본문 Pretendard / 읽기 글(동화 대사)·큰 제목 Noto Serif KR / 영문 장식 Cormorant Garamond
+ * 이모지 남발 금지 · 둥근 모서리 18 · 은은한 종이 결 · 짙은 숲색 단추
+ */
+:root {
+  --paper: #f7f4ec; --paper-deep: #efeadd; --paper-edge: #e6e1d4; --card: #fffdf9;
+  --ink: #1f2b20; --ink-soft: #4d574c; --ink-faint: #8a9084;
+  --brand: #2f7d4f; --brand-deep: #1d3a2a; --brand-soft: #dfe8d8; --on-brand: #f2f6ef;
+  --line: #e6e1d4; --surface-soft: #f6f3ea;
+  --g1: #cf7150; --g1-l: #f0b49b; --g2: #d59a3a; --g2-l: #f1cd8d; --g3: #82a35e; --g3-l: #bcd0a6;
+  --g4: #479b94; --g4-l: #9ccfc9; --g5: #5d87ab; --g5-l: #a9c3da; --g6: #8c6193; --g6-l: #c4aacb;
+  --radius: 18px; --r-pill: 999px;
+  --shadow-b: 0 14px 34px -18px rgba(61, 44, 29, .45);
+  --shadow-sm: 0 6px 16px -10px rgba(61, 44, 29, .4);
+  --ease: cubic-bezier(.4, 0, .2, 1);
+  --serif: 'Noto Serif KR', 'Pretendard', serif; --display: 'Cormorant Garamond', serif;
+  --sans: 'Pretendard', 'Pretendard Variable', -apple-system, 'Malgun Gothic', sans-serif;
+}
+.bk-paper { background: radial-gradient(1200px 600px at 80% -10%, #faf8f0 0, transparent 60%), radial-gradient(900px 500px at 0% 10%, #f5f2e8 0, transparent 55%), var(--paper); }
+.bk-paper::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .5; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E"); }
+
+/* 헤더 — 크림 바탕, 왼쪽 「부기」 글자 로고 + 작은 설명, 오른쪽 밑줄 링크 · 숲색 단추 */
+header.bk-site { position: sticky; top: 0; z-index: 50; height: 64px; background: var(--paper); border-bottom: 1px solid var(--paper-edge); }
+.bk-wrap { width: min(1180px, 92vw); margin-inline: auto; position: relative; z-index: 1; }
+.bk-head { height: 100%; display: flex; align-items: center; gap: 18px; }
+.bk-brand { display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; }
+.bk-brand img { height: 46px; width: auto; display: block; }
+.bk-brand .sl { font-size: 12.5px; font-weight: 700; color: var(--ink-soft); line-height: 1.2; }
+.bk-brand .sl b { display: block; font-size: 15px; color: var(--brand-deep); font-weight: 800; }
+.bk-ghost { display: inline-flex; align-items: center; padding: 8px 4px; font-weight: 700; font-size: 14px; color: var(--ink-soft); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: transparent; transition: color .15s, text-decoration-color .15s; background: none; border: 0; cursor: pointer; font-family: inherit; }
+.bk-ghost:hover { color: var(--brand-deep); text-decoration-color: currentColor; }
+.bk-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 8px; font: 800 15px var(--sans); letter-spacing: -.01em; background: var(--brand-deep); color: var(--on-brand); border: 0; cursor: pointer; text-decoration: none; transition: background .15s var(--ease), transform .15s; box-shadow: 0 8px 18px -8px rgba(29, 58, 42, .55); }
+.bk-btn:hover { background: var(--brand); transform: translateY(-1px); }
+.bk-btn.soft { background: var(--card); color: var(--ink); border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
+.bk-btn.soft:hover { background: var(--brand-soft); }
+.bk-eyebrow { font-family: var(--display); font-style: italic; font-size: 22px; color: var(--brand); letter-spacing: .01em; }
+.bk-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-sm); }
+footer.bk-site { background: #16281e; color: #c4d2c0; padding: 34px 0 30px; font-size: 14px; }
+footer.bk-site a { color: #e6efe2; }
