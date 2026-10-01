@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>부기 메타버스</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap">
+  <link rel="stylesheet" href="../engine3d/play.css">
+</head>
+<body>
+  <canvas id="scene"></canvas>
+  <script src="../js/studentmd.js"></script>
+  <script src="../js/avatar_v5.js"></script>
+  <script>window.WORLD_ID = new URLSearchParams(location.search).get("w") || "";</script>
+  <script type="module">import { boot } from '../engine3d/play-page.js'; boot();</script>
+</body>
+</html>

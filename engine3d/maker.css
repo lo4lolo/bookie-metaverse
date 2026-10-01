@@ -1,0 +1,76 @@
+/* 세계 만들기 화면 (play.css 위에 덧씀) */
+body.maker { overflow: hidden; }
+#mTop { position: fixed; left: 0; right: 0; top: 0; height: 56px; display: flex; align-items: center; gap: 6px; padding: 0 10px; background: var(--paper); border-bottom: 2px solid var(--ink); z-index: 40; }
+#mTop .logo { font: 20px 'Jua', sans-serif; color: var(--red); white-space: nowrap; }
+#mTop button { font: 16px 'Gowun Dodum', sans-serif; border: 2px solid var(--ink); border-radius: 10px; background: #fff; padding: 5px 10px; white-space: nowrap; }
+#mTop button:hover { background: #fff3b8; }
+#mTop .grow { flex: 1; }
+#mLib { font-size: 22px; text-decoration: none; }
+#mTitle { font: 18px 'Jua', sans-serif; border: 2px solid var(--ink); border-radius: 10px; padding: 4px 10px; width: 11em; background: #fff; }
+#mTabs { display: flex; gap: 4px; margin-left: 6px; }
+#mTabs button.on { background: var(--gold); }
+#mPlay.play { background: #8fd18a; font-family: 'Jua', sans-serif; font-size: 18px; }
+#mPlay.stop { background: var(--red); color: #fff; }
+#mErr { background: #fff0ec; color: #a0362a; border: 2px solid var(--red); border-radius: 10px; padding: 3px 10px; font-size: 14px; max-width: 30vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+#mMain { position: fixed; left: 0; right: 0; top: 56px; bottom: 0; display: flex; }
+#mPalette, #mProps { position: relative; width: 236px; flex: none; background: var(--paper); overflow-y: auto; padding: 8px; font-size: 15px; z-index: 30; }
+#mPalette { border-right: 2px solid var(--ink); }
+#mProps { border-left: 2px solid var(--ink); }
+#mView, #mBlocks, #mCode { flex: 1; position: relative; min-width: 0; }
+.maker canvas#scene { position: absolute; inset: 0; width: 100%; height: 100%; }
+#mViewBtns { position: absolute; right: 10px; top: 10px; display: flex; gap: 6px; z-index: 6; }
+#mViewBtns button { border: 2px solid var(--ink); border-radius: 12px; background: var(--paper); font-size: 17px; padding: 4px 10px; box-shadow: var(--shadow); }
+#mHint { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); background: rgba(251, 245, 230, .95); border: 2px solid var(--ink); border-radius: 12px; padding: 4px 12px; font-size: 15px; z-index: 6; pointer-events: none; }
+#mHint:empty { display: none; }
+body.playing #mPalette, body.playing #mProps, body.playing #mViewBtns, body.playing #mHint, body.playing #mTabs, body.playing #mUndo, body.playing #mRedo, body.playing #mNew, body.playing #mOpen, body.playing #mShare { display: none; }
+body.playing #pTop { top: 66px; }
+
+/* 왼쪽 도감 */
+.pal h3 { font: 17px 'Jua', sans-serif; font-weight: normal; margin: 10px 2px 6px; cursor: pointer; display: flex; justify-content: space-between; }
+.pal .cats { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
+.pal .cats button { border: 1.5px solid var(--ink); border-radius: 999px; background: #fff; font-size: 13px; padding: 1px 8px; }
+.pal .cats button.on { background: var(--gold); }
+.pal .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+.pal .grid button { border: 2px solid transparent; border-radius: 12px; background: #fff; padding: 4px 2px; font-size: 12px; line-height: 1.2; display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 64px; }
+.pal .grid button .ic { font-size: 26px; line-height: 1.1; }
+.pal .grid button canvas { width: 40px; height: 40px; image-rendering: pixelated; }
+.pal .grid button.on { border-color: var(--red); background: #fff3b8; }
+.pal .list button { display: block; width: 100%; text-align: left; border: 1.5px solid var(--ink); border-radius: 10px; background: #fff; margin: 3px 0; padding: 3px 8px; font-size: 14px; }
+.pal .list button.on { background: #fff3b8; }
+.pal .row { display: flex; gap: 4px; flex-wrap: wrap; margin: 4px 0; }
+.pal .row button, .props button { border: 2px solid var(--ink); border-radius: 10px; background: #fff; padding: 3px 8px; font-size: 14px; }
+.pal .row button:hover, .props button:hover { background: #fff3b8; }
+
+/* 오른쪽 속성 */
+.props h3 { font: 19px 'Jua', sans-serif; font-weight: normal; margin: 4px 0 8px; }
+.props label { display: block; margin: 8px 0 2px; font-size: 14px; }
+.props input[type=text], .props input[type=number], .props select { width: 100%; font: inherit; font-size: 15px; padding: 3px 8px; border: 2px solid var(--ink); border-radius: 8px; background: #fff; }
+.props input[type=range] { width: 100%; }
+.props input[type=color] { width: 100%; height: 32px; border: 2px solid var(--ink); border-radius: 8px; background: #fff; }
+.props .hint { font-size: 12.5px; opacity: .75; margin: 2px 0; }
+.props .btns { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+.props .danger { background: #ffe1da !important; }
+.props .val { float: right; opacity: .8; }
+
+/* 코드 */
+#mCode { display: flex; }
+#mCode[hidden], #mBlocks[hidden], #mView[hidden] { display: none !important; }
+#mCm { flex: 1; min-width: 0; position: relative; }
+#mCm .CodeMirror { position: absolute; inset: 0; height: auto; font: 16px/1.55 Consolas, 'D2Coding', 'Malgun Gothic', monospace; }
+#mCm .err-line { background: #ffe1da; }
+#mCm .run-line { background: #fff3b8; }
+#mRef { width: 270px; flex: none; overflow-y: auto; background: var(--paper); border-left: 2px solid var(--ink); padding: 8px; font-size: 13.5px; }
+#mRef h4 { font: 16px 'Jua', sans-serif; font-weight: normal; margin: 10px 0 4px; }
+#mRef button { display: block; width: 100%; text-align: left; font: 13px Consolas, 'Malgun Gothic', monospace; border: 1.5px solid #c9b48f; border-radius: 8px; background: #fff; margin: 3px 0; padding: 3px 6px; white-space: normal; word-break: break-all; }
+#mRef button:hover { background: #fff3b8; }
+#mRef .d { display: block; font-family: 'Gowun Dodum', sans-serif; font-size: 12px; opacity: .75; }
+
+#mToast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--ink); color: #fff; border-radius: 12px; padding: 8px 16px; font-size: 16px; z-index: 60; opacity: 0; transition: opacity .3s; pointer-events: none; }
+#mToast.on { opacity: 1; }
+
+@media (max-width: 900px) {
+  #mPalette, #mProps { width: 180px; }
+  #mTop .logo, #mHelpBtn { display: none; }
+  #mTop button { padding: 4px 6px; font-size: 14px; }
+  #mTitle { width: 7em; }
+}

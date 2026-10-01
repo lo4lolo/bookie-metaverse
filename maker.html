@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>세계 만들기 · 부기 메타버스</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap">
+  <link rel="stylesheet" href="vendor/codemirror.min.css" onerror="this.onerror=null;this.href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css'">
+  <link rel="stylesheet" href="engine3d/play.css">
+  <link rel="stylesheet" href="engine3d/maker.css">
+</head>
+<body class="maker">
+  <header id="mTop">
+    <b class="logo">🛠 세계 만들기</b>
+    <input id="mTitle" maxlength="30" title="세계 이름">
+    <nav id="mTabs">
+      <button data-tab="map" class="on">🗺 꾸미기</button>
+      <button data-tab="blocks">🧩 블록</button>
+      <button data-tab="code">⌨ 코드</button>
+    </nav>
+    <button id="mPlay" class="play">▶ 해 보기</button>
+    <span id="mErr" hidden></span>
+    <span class="grow"></span>
+    <button id="mUndo" title="되돌리기 (Ctrl+Z)">↶</button>
+    <button id="mRedo" title="다시 하기 (Ctrl+Y)">↷</button>
+    <button id="mNew" title="새 세계">📄 새로</button>
+    <button id="mOpen" title="세계 파일 열기">📂 열기</button>
+    <button id="mSave" title="세계 파일로 저장(내려받기)">💾 저장</button>
+    <button id="mShare" title="교실 서버의 세계 도서관에 올리기">📤 반에 올리기</button>
+    <a id="mLib" href="worlds/index.html" title="세계 도서관">📚</a>
+    <button id="mHelpBtn" title="도움말">❓</button>
+  </header>
+  <main id="mMain">
+    <aside id="mPalette"></aside>
+    <div id="mView">
+      <canvas id="scene"></canvas>
+      <div id="mViewBtns">
+        <button id="mTurnL" title="왼쪽으로 돌리기 (Q)">⟲</button>
+        <button id="mTurnR" title="오른쪽으로 돌리기 (E)">⟳</button>
+        <button id="mTop2" title="위에서 보기 / 비스듬히 보기 (T)">⬇ 위에서</button>
+        <button id="mHome" title="처음 자리로 (H)">🏠</button>
+      </div>
+      <div id="mHint"></div>
+    </div>
+    <div id="mBlocks" hidden></div>
+    <div id="mCode" hidden><div id="mCm"></div><aside id="mRef"></aside></div>
+    <aside id="mProps"></aside>
+  </main>
+  <div id="mToast"></div>
+  <section id="mHelp" class="sheet" hidden><div class="paper" style="text-align:left">
+    <h2>세계 만들기 도움말</h2>
+    <p><b>🗺 꾸미기</b> — 왼쪽에서 물건·인물을 고르고 책장을 누르면 놓여요. 놓인 것을 누르면 고르고, 끌면 옮겨요. 오른쪽에서 크기·회전·색·이름을 바꿔요.</p>
+    <ul>
+      <li>빈 땅을 끌면 화면이 움직여요. 오른쪽 단추로 끌면 돌아가요. 휠은 확대.</li>
+      <li>키: <b>Delete</b> 지우기 · <b>R</b> 돌리기 · <b>Ctrl+D</b> 복사 · <b>Esc</b> 고르기로 · <b>Ctrl+Z</b> 되돌리기 · <b>Q/E</b> 화면 돌리기 · <b>T</b> 위에서 보기</li>
+      <li><b>이름</b>을 붙인 물건·인물·자리·길은 코드에서 그 이름으로 불러요(예: <code>토끼.말하기("안녕")</code>).</li>
+      <li>길·개울은 고르면 노란 점이 나와요. 점을 끌어 모양을 바꿔요.</li>
+    </ul>
+    <p><b>🧩 블록 · ⌨ 코드</b> — 같은 이야기를 블록으로도, 자바스크립트 글로도 고칠 수 있어요. 한쪽을 고치면 다른 쪽도 바뀌어요. 맨 위 <b>▶ 시작하면</b> 아래가 차례대로 실행돼요.</p>
+    <p><b>▶ 해 보기</b> — 지금 만든 세계에 바로 들어가 봐요. <b>■ 멈추기</b>로 돌아와요.</p>
+    <p><b>💾 저장</b>은 세계 파일(.json)을 내려받아요. 고친 내용은 이 브라우저에도 자동으로 남지만, 꼭 파일로도 저장하세요.</p>
+    <button class="big" id="mHelpClose">알겠어요</button>
+  </div></section>
+  <script src="js/studentmd.js"></script>
+  <script src="js/avatar_v5.js"></script>
+  <script type="module" src="engine3d/maker.js"></script>
+</body>
+</html>

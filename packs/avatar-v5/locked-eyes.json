@@ -1,0 +1,170 @@
+[
+  {
+    "y": 18,
+    "hex": "#EAE1DBFF",
+    "x": 29,
+    "role": "left_sclera_top",
+    "rgba": [
+      234,
+      225,
+      219,
+      255
+    ]
+  },
+  {
+    "y": 19,
+    "hex": "#EFE8E1FF",
+    "x": 29,
+    "role": "left_sclera_middle",
+    "rgba": [
+      239,
+      232,
+      225,
+      255
+    ]
+  },
+  {
+    "y": 20,
+    "hex": "#FCFDFAFF",
+    "x": 29,
+    "role": "left_sclera_bottom",
+    "rgba": [
+      252,
+      253,
+      250,
+      255
+    ]
+  },
+  {
+    "y": 18,
+    "hex": "#3E2A1CFF",
+    "x": 30,
+    "role": "left_iris_cap",
+    "rgba": [
+      62,
+      42,
+      28,
+      255
+    ]
+  },
+  {
+    "y": 19,
+    "hex": "#7D6022FF",
+    "x": 30,
+    "role": "left_iris_middle",
+    "rgba": [
+      125,
+      96,
+      34,
+      255
+    ]
+  },
+  {
+    "y": 20,
+    "hex": "#B48835FF",
+    "x": 30,
+    "role": "left_iris_lower",
+    "rgba": [
+      180,
+      136,
+      53,
+      255
+    ]
+  },
+  {
+    "y": 19,
+    "hex": "#EAE2DAFF",
+    "x": 34,
+    "role": "right_inner_sclera_middle",
+    "rgba": [
+      234,
+      226,
+      218,
+      255
+    ]
+  },
+  {
+    "y": 20,
+    "hex": "#FDFCFCFF",
+    "x": 34,
+    "role": "right_inner_sclera_bottom",
+    "rgba": [
+      253,
+      252,
+      252,
+      255
+    ]
+  },
+  {
+    "y": 18,
+    "hex": "#3F2E1BFF",
+    "x": 35,
+    "role": "right_iris_cap",
+    "rgba": [
+      63,
+      46,
+      27,
+      255
+    ]
+  },
+  {
+    "y": 19,
+    "hex": "#816323FF",
+    "x": 35,
+    "role": "right_iris_middle",
+    "rgba": [
+      129,
+      99,
+      35,
+      255
+    ]
+  },
+  {
+    "y": 20,
+    "hex": "#BB8E36FF",
+    "x": 35,
+    "role": "right_iris_lower",
+    "rgba": [
+      187,
+      142,
+      54,
+      255
+    ]
+  },
+  {
+    "y": 18,
+    "hex": "#E9E0D7FF",
+    "x": 36,
+    "role": "right_sclera_top",
+    "rgba": [
+      233,
+      224,
+      215,
+      255
+    ]
+  },
+  {
+    "y": 19,
+    "hex": "#F2EEE9FF",
+    "x": 36,
+    "role": "right_sclera_middle",
+    "rgba": [
+      242,
+      238,
+      233,
+      255
+    ]
+  },
+  {
+    "y": 20,
+    "hex": "#FDFCFBFF",
+    "x": 36,
+    "role": "right_sclera_bottom",
+    "rgba": [
+      253,
+      252,
+      251,
+      255
+    ]
+  }
+]

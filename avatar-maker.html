@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>내 아바타 만들기 · 부기 메타버스</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap">
+  <style>
+    :root { --paper: #fbf5e6; --ink: #4a3426; --red: #d9634f; --gold: #e8b84a; --shadow: 0 6px 0 rgba(74,52,38,.18), 0 14px 28px rgba(74,52,38,.2); }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin: 0; min-height: 100vh; background: #eadcbf; color: var(--ink); font: 18px/1.6 'Gowun Dodum', 'Malgun Gothic', sans-serif; padding: 16px; }
+    h1 { font: 40px 'Jua', sans-serif; color: var(--red); margin: 0 0 4px; text-align: center; }
+    .lead { text-align: center; margin: 0 0 16px; }
+    .wrap { max-width: 980px; margin: 0 auto; display: grid; grid-template-columns: 320px 1fr; gap: 16px; }
+    .card { background: var(--paper); border: 3px solid var(--ink); border-radius: 20px; padding: 16px 18px; box-shadow: var(--shadow); }
+    #view { width: 256px; height: 256px; image-rendering: pixelated; display: block; margin: 0 auto; background: radial-gradient(#fff8e6, #f0e2c2); border-radius: 16px; border: 2px solid var(--ink); }
+    label { display: block; margin-top: 8px; }
+    input[type=text] { font: inherit; width: 100%; padding: 6px 10px; border: 2px solid var(--ink); border-radius: 10px; background: #fff; }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+    .part { margin-bottom: 12px; }
+    .part b { font: 20px 'Jua', sans-serif; font-weight: normal; }
+    .sw { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; align-items: center; }
+    .sw button { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--ink); cursor: pointer; }
+    .sw button.on { outline: 4px solid var(--gold); outline-offset: 2px; }
+    .sw input[type=color] { width: 40px; height: 36px; border: none; background: none; cursor: pointer; }
+    .btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; justify-content: center; }
+    button.big { font: 20px 'Jua', sans-serif; padding: 10px 18px; border-radius: 14px; border: 2px solid var(--ink); background: var(--gold); box-shadow: 0 5px 0 rgba(74,52,38,.3); cursor: pointer; color: var(--ink); }
+    button.big.soft { background: #fff; }
+    #msg { text-align: center; min-height: 1.6em; }
+    .small { font-size: 15px; opacity: .85; }
+    a { color: var(--red); }
+    @media (max-width: 760px) { .wrap { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>내 아바타 만들기</h1>
+  <p class="lead">색을 고르고 이름을 쓰면, 내 <b>부기 기록장(md 파일)</b>이 만들어져요.<br><span class="small">기록장 하나로 동화책·마을 등 여러 체험 공간에 들어갈 수 있어요.</span></p>
+  <div class="wrap">
+    <div class="card">
+      <canvas id="view" width="64" height="64"></canvas>
+      <label>이름 <input type="text" id="name" maxlength="12" placeholder="내 이름"></label>
+      <div class="row2">
+        <label>학교 <input type="text" id="school" maxlength="12" placeholder="○○초"></label>
+        <label>반 <input type="text" id="klass" maxlength="8" placeholder="1-2"></label>
+        <label>번호 <input type="text" id="num" maxlength="3"></label>
+      </div>
+      <div class="btns">
+        <button class="big" id="save">📒 기록장 저장(내려받기)</button>
+        <button class="big soft" id="open">기록장 열기</button>
+      </div>
+      <p id="msg" class="small"></p>
+      <p class="small" style="text-align:center"><a href="worlds/rabbit-turtle/">🐢 토끼와 거북이 동화책으로 가기</a> · <a href="maker.html">🛠 세계 만들기</a> · <a href="index.html">석산 마을</a></p>
+    </div>
+    <div class="card" id="parts"></div>
+  </div>
+  <script src="js/studentmd.js?v=1"></script>
+  <script src="js/avatar_v5.js?v=1"></script>
+  <script>
+  (async () => {
+    const $ = id => document.getElementById(id);
+    // 아이들이 고르기 쉬운 색 묶음(역할마다 8가지) — 외곽선·명암은 승인 v5 그대로 유지된다
+    const PALETTE = {
+      hair: ['#3a2a20', '#6b4426', '#9a6a3c', '#d4a35a', '#e9d27a', '#c0563f', '#556080', '#2d2d3a'],
+      skin: ['#ffe0c8', '#f6cfae', '#e9b48a', '#d29a6e', '#b07a52', '#8a5a3a'],
+      shirt: ['#fff8ec', '#f2a3b5', '#ffd25a', '#9fd6a0', '#9cc8f0', '#c7a0e8', '#f39a6b', '#6f9d52'],
+      collar: ['#4fb3a8', '#d9634f', '#5d8fc4', '#e8b84a', '#c7a0e8', '#6f9d52', '#4a3426', '#ffffff'],
+      pants: ['#4d6db3', '#2f3f6a', '#6b4426', '#7a7a86', '#3f7a54', '#b0476a', '#e3c48e', '#2d2d3a'],
+      shoes: ['#6b4426', '#d9634f', '#2d2d3a', '#ffffff', '#5d8fc4', '#e8b84a'],
+    };
+    await AvatarV5.load('packs/avatar-v5/');
+    let data = StudentMD.recall() || StudentMD.create({});
+    const colors = data.avatar.colors;
+    const parts = $('parts');
+    for (const role of Object.keys(PALETTE)) {
+      const box = document.createElement('div'); box.className = 'part';
+      box.innerHTML = `<b>${AvatarV5.NAMES[role]}</b><div class="sw"></div>`;
+      const sw = box.querySelector('.sw');
+      const pick = c => { if (c) colors[role] = c; else delete colors[role]; draw(); mark(); };
+      const mark = () => sw.querySelectorAll('button').forEach(b => b.classList.toggle('on', (b.dataset.c || '') === (colors[role] || '')));
+      const def = document.createElement('button'); def.title = '처음 색'; def.dataset.c = ''; def.style.background = AvatarV5.DEFAULTS[role]; def.textContent = '↺'; def.onclick = () => pick(null); sw.append(def);
+      for (const c of PALETTE[role]) { const b = document.createElement('button'); b.style.background = c; b.dataset.c = c; b.title = c; b.onclick = () => pick(c); sw.append(b); }
+      const free = document.createElement('input'); free.type = 'color'; free.title = '내 마음대로 색'; free.value = colors[role] || AvatarV5.DEFAULTS[role]; free.oninput = () => pick(free.value); sw.append(free);
+      parts.append(box); mark();
+    }
+    function draw() { const c = $('view').getContext('2d'); c.clearRect(0, 0, 64, 64); c.drawImage(AvatarV5.canvas(colors), 0, 0); }
+    function fill() { const s = data.student; $('name').value = s.name === '이름 없음' ? '' : s.name; $('school').value = s.school; $('klass').value = s.class; $('num').value = s.number; }
+    fill(); draw();
+    $('save').onclick = () => {
+      const n = $('name').value.trim();
+      if (!n) { $('msg').textContent = '이름을 먼저 써 주세요.'; $('name').focus(); return; }
+      Object.assign(data.student, { name: n, school: $('school').value.trim(), class: $('klass').value.trim(), number: $('num').value.trim() });
+      data.updated = StudentMD.today(); data.sig = null;
+      StudentMD.download(data); StudentMD.remember(data);
+      $('msg').textContent = '기록장을 내려받았어요. 내 폴더에 잘 넣어 두고, 체험할 때마다 열어 주세요.';
+    };
+    $('open').onclick = async () => {
+      try {
+        data = await StudentMD.pick();
+        for (const k of Object.keys(colors)) delete colors[k];
+        Object.assign(colors, data.avatar.colors); data.avatar.colors = colors;
+        fill(); draw(); parts.querySelectorAll('.part').forEach(p => p.querySelectorAll('button').forEach(b => b.classList.remove('on')));
+        $('msg').textContent = `${data.student.name}의 기록장을 열었어요. 색을 바꾸고 다시 저장하세요.`;
+      } catch (e) { $('msg').textContent = e.message; }
+    };
+  })();
+  </script>
+</body>
+</html>

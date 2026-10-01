@@ -1,0 +1,1123 @@
+{
+  "version": 1,
+  "tiles": [
+    {
+      "id": "g",
+      "name": "풀밭",
+      "walk": true
+    },
+    {
+      "id": "f",
+      "name": "꽃 풀밭",
+      "walk": true
+    },
+    {
+      "id": "d",
+      "name": "흙길",
+      "walk": true
+    },
+    {
+      "id": "s",
+      "name": "돌바닥",
+      "walk": true
+    },
+    {
+      "id": "w",
+      "name": "나무 마루",
+      "walk": true
+    },
+    {
+      "id": "t",
+      "name": "체크 타일",
+      "walk": true
+    },
+    {
+      "id": "m",
+      "name": "민트 바닥",
+      "walk": true
+    },
+    {
+      "id": "c",
+      "name": "장미 카펫",
+      "walk": true
+    },
+    {
+      "id": "a",
+      "name": "모래",
+      "walk": true
+    },
+    {
+      "id": "b",
+      "name": "다리",
+      "walk": true
+    },
+    {
+      "id": "~",
+      "name": "물",
+      "walk": false
+    }
+  ],
+  "objectCats": [
+    {
+      "id": "furniture",
+      "name": "가구"
+    },
+    {
+      "id": "deco",
+      "name": "소품"
+    },
+    {
+      "id": "nature",
+      "name": "자연"
+    },
+    {
+      "id": "town",
+      "name": "마을"
+    },
+    {
+      "id": "wall",
+      "name": "벽·문"
+    },
+    {
+      "id": "special",
+      "name": "특별"
+    }
+  ],
+  "objects": [
+    {
+      "id": "bed",
+      "name": "포근한 침대",
+      "cat": "furniture",
+      "w": 1,
+      "h": 2,
+      "tall": 0,
+      "solid": true,
+      "price": 25
+    },
+    {
+      "id": "table",
+      "name": "나무 탁자",
+      "cat": "furniture",
+      "w": 2,
+      "h": 1,
+      "tall": 0,
+      "solid": true,
+      "price": 15
+    },
+    {
+      "id": "chair",
+      "name": "작은 의자",
+      "cat": "furniture",
+      "w": 1,
+      "h": 1,
+      "tall": 0,
+      "solid": false,
+      "price": 8
+    },
+    {
+      "id": "sofa",
+      "name": "말랑 소파",
+      "cat": "furniture",
+      "w": 2,
+      "h": 1,
+      "tall": 0,
+      "solid": false,
+      "price": 22
+    },
+    {
+      "id": "desk",
+      "name": "공부 책상",
+      "cat": "furniture",
+      "w": 2,
+      "h": 1,
+      "tall": 0,
+      "solid": true,
+      "price": 18
+    },
+    {
+      "id": "bookshelf",
+      "name": "책장",
+      "cat": "furniture",
+      "w": 1,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": 20
+    },
+    {
+      "id": "piano",
+      "name": "피아노",
+      "cat": "furniture",
+      "w": 2,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": 45
+    },
+    {
+      "id": "clock",
+      "name": "괘종시계",
+      "cat": "furniture",
+      "w": 1,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": 14
+    },
+    {
+      "id": "floorlamp",
+      "name": "스탠드",
+      "cat": "furniture",
+      "w": 1,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": 10
+    },
+    {
+      "id": "rug",
+      "name": "동그란 러그",
+      "cat": "furniture",
+      "w": 2,
+      "h": 2,
+      "tall": 0,
+      "solid": false,
+      "floor": true,
+      "price": 12
+    },
+    {
+      "id": "whiteboard",
+      "name": "칠판",
+      "cat": "furniture",
+      "w": 2,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": 20,
+      "act": "sign"
+    },
+    {
+      "id": "plant",
+      "name": "화분",
+      "cat": "deco",
+      "w": 1,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": 8
+    },
+    {
+      "id": "aquarium",
+      "name": "어항",
+      "cat": "deco",
+      "w": 1,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": 30
+    },
+    {
+      "id": "easel",
+      "name": "이젤",
+      "cat": "deco",
+      "w": 1,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": 15,
+      "act": "sign"
+    },
+    {
+      "id": "teddy",
+      "name": "곰 인형",
+      "cat": "deco",
+      "w": 1,
+      "h": 1,
+      "tall": 0,
+      "solid": false,
+      "price": 12
+    },
+    {
+      "id": "cake",
+      "name": "딸기 케이크",
+      "cat": "deco",
+      "w": 1,
+      "h": 1,
+      "tall": 0,
+      "solid": true,
+      "price": 10
+    },
+    {
+      "id": "barrel",
+      "name": "나무통",
+      "cat": "deco",
+      "w": 1,
+      "h": 1,
+      "tall": 0,
+      "solid": true,
+      "price": 6
+    },
+    {
+      "id": "crate",
+      "name": "나무 상자",
+      "cat": "deco",
+      "w": 1,
+      "h": 1,
+      "tall": 0,
+      "solid": true,
+      "price": 5
+    },
+    {
+      "id": "mailbox",
+      "name": "우체통",
+      "cat": "deco",
+      "w": 1,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": 10
+    },
+    {
+      "id": "sign",
+      "name": "팻말",
+      "cat": "deco",
+      "w": 1,
+      "h": 1,
+      "tall": 0,
+      "solid": true,
+      "price": 5,
+      "act": "sign"
+    },
+    {
+      "id": "tree",
+      "name": "둥근 나무",
+      "cat": "nature",
+      "w": 1,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": 15
+    },
+    {
+      "id": "pine",
+      "name": "전나무",
+      "cat": "nature",
+      "w": 1,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": 15
+    },
+    {
+      "id": "bush",
+      "name": "덤불",
+      "cat": "nature",
+      "w": 1,
+      "h": 1,
+      "tall": 0,
+      "solid": true,
+      "price": 8
+    },
+    {
+      "id": "flowers",
+      "name": "꽃밭",
+      "cat": "nature",
+      "w": 1,
+      "h": 1,
+      "tall": 0,
+      "solid": false,
+      "floor": true,
+      "price": 5
+    },
+    {
+      "id": "rock",
+      "name": "바위",
+      "cat": "nature",
+      "w": 1,
+      "h": 1,
+      "tall": 0,
+      "solid": true,
+      "price": 5
+    },
+    {
+      "id": "stump",
+      "name": "그루터기",
+      "cat": "nature",
+      "w": 1,
+      "h": 1,
+      "tall": 0,
+      "solid": false,
+      "price": 6
+    },
+    {
+      "id": "fence",
+      "name": "울타리",
+      "cat": "town",
+      "w": 1,
+      "h": 1,
+      "tall": 0,
+      "solid": true,
+      "price": 4
+    },
+    {
+      "id": "lamp",
+      "name": "가로등",
+      "cat": "town",
+      "w": 1,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": 12
+    },
+    {
+      "id": "bench",
+      "name": "벤치",
+      "cat": "town",
+      "w": 2,
+      "h": 1,
+      "tall": 0,
+      "solid": false,
+      "price": 14
+    },
+    {
+      "id": "well",
+      "name": "우물",
+      "cat": "town",
+      "w": 2,
+      "h": 2,
+      "tall": 1,
+      "solid": true,
+      "price": 30
+    },
+    {
+      "id": "fountain",
+      "name": "분수",
+      "cat": "town",
+      "w": 2,
+      "h": 2,
+      "tall": 0,
+      "solid": true,
+      "price": 60
+    },
+    {
+      "id": "house_red",
+      "name": "빨간 지붕 집",
+      "cat": "town",
+      "w": 4,
+      "h": 3,
+      "tall": 2,
+      "solid": true,
+      "price": 120
+    },
+    {
+      "id": "house_blue",
+      "name": "파란 지붕 집",
+      "cat": "town",
+      "w": 4,
+      "h": 3,
+      "tall": 2,
+      "solid": true,
+      "price": 120
+    },
+    {
+      "id": "wall_wood",
+      "name": "나무 벽",
+      "cat": "wall",
+      "w": 1,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": 2
+    },
+    {
+      "id": "wall_stone",
+      "name": "돌벽",
+      "cat": "wall",
+      "w": 1,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": 2
+    },
+    {
+      "id": "wall_white",
+      "name": "흰 벽",
+      "cat": "wall",
+      "w": 1,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": 2
+    },
+    {
+      "id": "door",
+      "name": "현관 매트",
+      "cat": "wall",
+      "w": 1,
+      "h": 1,
+      "tall": 0,
+      "solid": false,
+      "floor": true,
+      "price": 3
+    },
+    {
+      "id": "minitower",
+      "name": "작은 돌탑",
+      "cat": "special",
+      "w": 1,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": -2
+    },
+    {
+      "id": "tower",
+      "name": "우리 반 돌탑",
+      "cat": "special",
+      "w": 2,
+      "h": 2,
+      "tall": 3,
+      "solid": true,
+      "price": -1,
+      "act": "tower"
+    },
+    {
+      "id": "shop",
+      "name": "석산 상점",
+      "cat": "special",
+      "w": 4,
+      "h": 3,
+      "tall": 2,
+      "solid": true,
+      "price": -1,
+      "act": "shop"
+    },
+    {
+      "id": "board",
+      "name": "알림판",
+      "cat": "special",
+      "w": 2,
+      "h": 1,
+      "tall": 1,
+      "solid": true,
+      "price": -1,
+      "act": "board"
+    },
+    {
+      "id": "storygate",
+      "name": "이야기 문",
+      "cat": "special",
+      "w": 2,
+      "h": 1,
+      "tall": 2,
+      "solid": false,
+      "price": -1,
+      "act": "story"
+    }
+  ],
+  "wearSlots": [
+    {
+      "id": "hair",
+      "name": "머리",
+      "color": "hairC"
+    },
+    {
+      "id": "top",
+      "name": "상의",
+      "color": "topC"
+    },
+    {
+      "id": "bottom",
+      "name": "하의",
+      "color": "botC"
+    },
+    {
+      "id": "shoes",
+      "name": "신발",
+      "color": "shoeC"
+    },
+    {
+      "id": "head",
+      "name": "머리장식",
+      "color": "headC"
+    },
+    {
+      "id": "hand",
+      "name": "손"
+    },
+    {
+      "id": "back",
+      "name": "등",
+      "color": "backC"
+    }
+  ],
+  "wear": [
+    {
+      "id": "hair_short",
+      "slot": "hair",
+      "name": "짧은 머리",
+      "price": 0
+    },
+    {
+      "id": "hair_bob",
+      "slot": "hair",
+      "name": "단발",
+      "price": 0
+    },
+    {
+      "id": "hair_long",
+      "slot": "hair",
+      "name": "긴 머리",
+      "price": 0
+    },
+    {
+      "id": "hair_pony",
+      "slot": "hair",
+      "name": "포니테일",
+      "price": 10
+    },
+    {
+      "id": "hair_spiky",
+      "slot": "hair",
+      "name": "삐죽 머리",
+      "price": 10
+    },
+    {
+      "id": "hair_bun",
+      "slot": "hair",
+      "name": "똥머리",
+      "price": 15
+    },
+    {
+      "id": "hair_curly",
+      "slot": "hair",
+      "name": "곱슬 머리",
+      "price": 15
+    },
+    {
+      "id": "hair_twin",
+      "slot": "hair",
+      "name": "양갈래",
+      "price": 20
+    },
+    {
+      "id": "top_tee",
+      "slot": "top",
+      "name": "티셔츠",
+      "price": 0
+    },
+    {
+      "id": "top_stripe",
+      "slot": "top",
+      "name": "줄무늬 티",
+      "price": 10
+    },
+    {
+      "id": "top_apron",
+      "slot": "top",
+      "name": "앞치마",
+      "price": 15
+    },
+    {
+      "id": "top_hoodie",
+      "slot": "top",
+      "name": "후드티",
+      "price": 20
+    },
+    {
+      "id": "top_overall",
+      "slot": "top",
+      "name": "멜빵옷",
+      "price": 25
+    },
+    {
+      "id": "top_dress",
+      "slot": "top",
+      "name": "원피스",
+      "price": 30
+    },
+    {
+      "id": "top_hanbok",
+      "slot": "top",
+      "name": "한복",
+      "price": 40
+    },
+    {
+      "id": "top_armor",
+      "slot": "top",
+      "name": "검사 갑옷",
+      "price": 40
+    },
+    {
+      "id": "top_robe",
+      "slot": "top",
+      "name": "마법사 로브",
+      "price": 40
+    },
+    {
+      "id": "top_tunic",
+      "slot": "top",
+      "name": "궁수 튜닉",
+      "price": 40
+    },
+    {
+      "id": "top_holy",
+      "slot": "top",
+      "name": "성직자 로브",
+      "price": 40
+    },
+    {
+      "id": "top_vest",
+      "slot": "top",
+      "name": "상인 조끼",
+      "price": 35
+    },
+    {
+      "id": "top_rogue",
+      "slot": "top",
+      "name": "도적 복장",
+      "price": 40
+    },
+    {
+      "id": "bottom_pants",
+      "slot": "bottom",
+      "name": "긴 바지",
+      "price": 0
+    },
+    {
+      "id": "bottom_shorts",
+      "slot": "bottom",
+      "name": "반바지",
+      "price": 0
+    },
+    {
+      "id": "bottom_skirt",
+      "slot": "bottom",
+      "name": "치마",
+      "price": 10
+    },
+    {
+      "id": "bottom_bloomers",
+      "slot": "bottom",
+      "name": "통바지",
+      "price": 10
+    },
+    {
+      "id": "bottom_cargo",
+      "slot": "bottom",
+      "name": "카고바지",
+      "price": 10
+    },
+    {
+      "id": "bottom_leggings",
+      "slot": "bottom",
+      "name": "레깅스",
+      "price": 10
+    },
+    {
+      "id": "shoes_sneakers",
+      "slot": "shoes",
+      "name": "운동화",
+      "price": 0
+    },
+    {
+      "id": "shoes_sandals",
+      "slot": "shoes",
+      "name": "샌들",
+      "price": 5
+    },
+    {
+      "id": "shoes_boots",
+      "slot": "shoes",
+      "name": "장화",
+      "price": 10
+    },
+    {
+      "id": "shoes_thigh",
+      "slot": "shoes",
+      "name": "긴 장화",
+      "price": 15
+    },
+    {
+      "id": "head_none",
+      "slot": "head",
+      "name": "없음",
+      "price": 0
+    },
+    {
+      "id": "head_sprout",
+      "slot": "head",
+      "name": "새싹",
+      "price": 10
+    },
+    {
+      "id": "head_ribbon",
+      "slot": "head",
+      "name": "리본",
+      "price": 10
+    },
+    {
+      "id": "head_beanie",
+      "slot": "head",
+      "name": "털모자",
+      "price": 15
+    },
+    {
+      "id": "head_strawhat",
+      "slot": "head",
+      "name": "밀짚모자",
+      "price": 20
+    },
+    {
+      "id": "head_bunny",
+      "slot": "head",
+      "name": "토끼 귀",
+      "price": 25
+    },
+    {
+      "id": "head_cat",
+      "slot": "head",
+      "name": "고양이 귀",
+      "price": 25
+    },
+    {
+      "id": "head_wizard",
+      "slot": "head",
+      "name": "마법사 모자",
+      "price": 40
+    },
+    {
+      "id": "head_crown",
+      "slot": "head",
+      "name": "작은 왕관",
+      "price": 80
+    },
+    {
+      "id": "head_flowerpin",
+      "slot": "head",
+      "name": "들꽃 머리핀",
+      "price": -1,
+      "note": "이야기 모드 보상"
+    },
+    {
+      "id": "head_archer",
+      "slot": "head",
+      "name": "깃털 모자",
+      "price": 30
+    },
+    {
+      "id": "head_goggles",
+      "slot": "head",
+      "name": "고글",
+      "price": 25
+    },
+    {
+      "id": "head_slime",
+      "slot": "head",
+      "name": "슬라임 친구",
+      "price": 60
+    },
+    {
+      "id": "hand_none",
+      "slot": "hand",
+      "name": "없음",
+      "price": 0
+    },
+    {
+      "id": "hand_flower",
+      "slot": "hand",
+      "name": "꽃 한 송이",
+      "price": 8
+    },
+    {
+      "id": "hand_balloon",
+      "slot": "hand",
+      "name": "풍선",
+      "price": 12
+    },
+    {
+      "id": "hand_lantern",
+      "slot": "hand",
+      "name": "초롱",
+      "price": 15
+    },
+    {
+      "id": "hand_rod",
+      "slot": "hand",
+      "name": "낚싯대",
+      "price": 20
+    },
+    {
+      "id": "hand_sword",
+      "slot": "hand",
+      "name": "검",
+      "price": 20
+    },
+    {
+      "id": "hand_wand",
+      "slot": "hand",
+      "name": "별 지팡이",
+      "price": 30
+    },
+    {
+      "id": "hand_book",
+      "slot": "hand",
+      "name": "이야기책",
+      "price": -1,
+      "note": "이야기 모드 보상"
+    },
+    {
+      "id": "hand_staff",
+      "slot": "hand",
+      "name": "마법 지팡이",
+      "price": 35
+    },
+    {
+      "id": "hand_bow",
+      "slot": "hand",
+      "name": "활",
+      "price": 30
+    },
+    {
+      "id": "hand_cross",
+      "slot": "hand",
+      "name": "십자가 지팡이",
+      "price": 35
+    },
+    {
+      "id": "hand_dagger",
+      "slot": "hand",
+      "name": "단검",
+      "price": 30
+    },
+    {
+      "id": "back_none",
+      "slot": "back",
+      "name": "없음",
+      "price": 0
+    },
+    {
+      "id": "back_cape",
+      "slot": "back",
+      "name": "망토",
+      "price": 25
+    },
+    {
+      "id": "back_backpack",
+      "slot": "back",
+      "name": "배낭",
+      "price": 25
+    },
+    {
+      "id": "back_quiver",
+      "slot": "back",
+      "name": "화살통",
+      "price": 20
+    },
+    {
+      "id": "back_wings",
+      "slot": "back",
+      "name": "날개",
+      "price": 60
+    }
+  ],
+  "skins": [
+    "#F6E0C8",
+    "#F3D2B3",
+    "#E8B894",
+    "#C98E6B",
+    "#8D5A3F"
+  ],
+  "hairColors": [
+    "#4B3A32",
+    "#765849",
+    "#A9784A",
+    "#E3C07A",
+    "#C8563A",
+    "#2E2A3A",
+    "#8A6AC0",
+    "#8FB9D4",
+    "#E7A3A0",
+    "#CFC8D0",
+    "#8FA879",
+    "#EDE6DA"
+  ],
+  "clothColors": [
+    "#C97B5D",
+    "#B03A3A",
+    "#E7A3A0",
+    "#EBCB7A",
+    "#8FA879",
+    "#5F9A4A",
+    "#8FB9D4",
+    "#526D89",
+    "#3D4A7A",
+    "#8A6AC0",
+    "#6A2E4A",
+    "#F3EBDD",
+    "#DCC7AE",
+    "#8A6A48",
+    "#765849",
+    "#4B3A32"
+  ],
+  "defaultLook": {
+    "skin": "#F3D2B3",
+    "hair": "hair_short",
+    "hairC": "#765849",
+    "top": "top_tee",
+    "topC": "#8FB9D4",
+    "bottom": "bottom_pants",
+    "botC": "#526D89",
+    "shoes": "shoes_sneakers",
+    "shoeC": "#765849",
+    "head": "head_none",
+    "headC": "#C97B5D",
+    "hand": "hand_none",
+    "back": "back_none",
+    "backC": "#B4483C"
+  },
+  "presets": [
+    {
+      "id": "swordsman",
+      "name": "검사",
+      "en": "Swordsman",
+      "bg": "#F0D5C3",
+      "look": {
+        "skin": "#F3D2B3",
+        "hair": "hair_spiky",
+        "hairC": "#B98760",
+        "top": "top_armor",
+        "topC": "#F1E6D0",
+        "bottom": "bottom_bloomers",
+        "botC": "#5C6478",
+        "shoes": "shoes_boots",
+        "shoeC": "#8A5A3A",
+        "head": "head_none",
+        "headC": "#C97B5D",
+        "hand": "hand_sword",
+        "back": "back_cape",
+        "backC": "#8A4E3E"
+      }
+    },
+    {
+      "id": "mage",
+      "name": "마법사",
+      "en": "Mage",
+      "bg": "#D7DCEB",
+      "look": {
+        "skin": "#F6E0C8",
+        "hair": "hair_long",
+        "hairC": "#8F8497",
+        "top": "top_robe",
+        "topC": "#8E4636",
+        "bottom": "bottom_pants",
+        "botC": "#3A3040",
+        "shoes": "shoes_thigh",
+        "shoeC": "#5A4038",
+        "head": "head_wizard",
+        "headC": "#4A4E6A",
+        "hand": "hand_staff",
+        "back": "back_cape",
+        "backC": "#5A4A62"
+      }
+    },
+    {
+      "id": "archer",
+      "name": "궁수",
+      "en": "Archer",
+      "bg": "#D9E4CC",
+      "look": {
+        "skin": "#F3D2B3",
+        "hair": "hair_bob",
+        "hairC": "#C49A64",
+        "top": "top_tunic",
+        "topC": "#6F7650",
+        "bottom": "bottom_pants",
+        "botC": "#6B4A3A",
+        "shoes": "shoes_boots",
+        "shoeC": "#8A5A3A",
+        "head": "head_archer",
+        "headC": "#6E7152",
+        "hand": "hand_bow",
+        "back": "back_quiver",
+        "backC": "#8A5A3A"
+      }
+    },
+    {
+      "id": "acolyte",
+      "name": "복사",
+      "en": "Acolyte",
+      "bg": "#F1E4C6",
+      "look": {
+        "skin": "#F6E0C8",
+        "hair": "hair_long",
+        "hairC": "#CDBBA8",
+        "top": "top_holy",
+        "topC": "#F6F1E8",
+        "bottom": "bottom_pants",
+        "botC": "#F3EBDD",
+        "shoes": "shoes_boots",
+        "shoeC": "#A8906E",
+        "head": "head_none",
+        "headC": "#C97B5D",
+        "hand": "hand_cross",
+        "back": "back_none",
+        "backC": "#B4483C"
+      }
+    },
+    {
+      "id": "merchant",
+      "name": "상인",
+      "en": "Merchant",
+      "bg": "#EBD3BF",
+      "look": {
+        "skin": "#E8B894",
+        "hair": "hair_spiky",
+        "hairC": "#A85A48",
+        "top": "top_vest",
+        "topC": "#6E5240",
+        "bottom": "bottom_cargo",
+        "botC": "#8C7A5E",
+        "shoes": "shoes_boots",
+        "shoeC": "#8A5A3A",
+        "head": "head_goggles",
+        "headC": "#8A5A3A",
+        "hand": "hand_none",
+        "back": "back_backpack",
+        "backC": "#A97B4E"
+      }
+    },
+    {
+      "id": "thief",
+      "name": "도적",
+      "en": "Thief",
+      "bg": "#DCD3E6",
+      "look": {
+        "skin": "#E8B894",
+        "hair": "hair_pony",
+        "hairC": "#4E4652",
+        "top": "top_rogue",
+        "topC": "#5A3E44",
+        "bottom": "bottom_leggings",
+        "botC": "#3A3036",
+        "shoes": "shoes_thigh",
+        "shoeC": "#4A3838",
+        "head": "head_none",
+        "headC": "#C97B5D",
+        "hand": "hand_dagger",
+        "back": "back_cape",
+        "backC": "#4E3E4E"
+      }
+    }
+  ],
+  "emotes": [
+    "👋",
+    "😊",
+    "😂",
+    "😮",
+    "❤️",
+    "👍",
+    "🎉",
+    "❓"
+  ]
+}

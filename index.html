@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>부기 메타버스 · Bookie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap">
+  <style>
+    :root { --paper: #fbf5e6; --ink: #4a3426; --red: #d9634f; --gold: #e8b84a; --shadow: 0 6px 0 rgba(74,52,38,.18), 0 14px 28px rgba(74,52,38,.2); }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: #eadcbf; color: var(--ink); font: 18px/1.6 'Gowun Dodum', 'Malgun Gothic', sans-serif; padding: 24px 16px; display: grid; place-items: center; }
+    main { width: min(760px, 100%); background: var(--paper); border: 3px solid var(--ink); border-radius: 24px; padding: 26px 24px; box-shadow: var(--shadow); text-align: center; }
+    h1 { font: 46px 'Jua', sans-serif; color: var(--red); margin: 0 0 6px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 18px 0; }
+    a.card { display: block; background: #fff; border: 2px solid var(--ink); border-radius: 16px; padding: 14px; color: var(--ink); text-decoration: none; box-shadow: 0 4px 0 rgba(74,52,38,.25); }
+    a.card:hover { background: #fff3b8; }
+    a.card b { display: block; font: 22px 'Jua', sans-serif; font-weight: normal; }
+    a.card span { font-size: 15px; opacity: .8; }
+    a.main { background: var(--gold); }
+    .small { font-size: 14px; opacity: .8; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>📖 부기 메타버스</h1>
+    <p class="small" style="margin-top:-6px">Bookie — 책(Book) 속으로 들어가는 메타버스</p>
+    <p>동화책 속으로 들어가 이야기를 만나고, 내 세계를 직접 만들어 블록·코드로 움직여 봐요.</p>
+    <div class="grid">
+      <a class="card main" href="worlds/rabbit-turtle/"><b>🐢 토끼와 거북이</b><span>초등 1~2학년 동화책 세계</span></a>
+      <a class="card" href="worlds/index.html"><b>📚 세계 도서관</b><span>동화책 모아 보기 · 세계 파일로 놀기</span></a>
+      <a class="card" href="maker.html"><b>🛠 세계 만들기</b><span>꾸미기 · 🧩 블록 · ⌨ 자바스크립트 · 🎨 도트 공방</span></a>
+      <a class="card" href="avatar-maker.html"><b>🧒 내 아바타·기록장</b><span>색을 골라 나만의 기록장(md) 만들기</span></a>
+    </div>
+    <p class="small">기록장과 만든 세계는 내 컴퓨터(파일·브라우저)에만 저장돼요. 이 누리집은 아무것도 모으지 않아요.<br>
+      교실 서버판(같은 와이파이 마을·채팅·포인트·반 도서관 올리기)은 선생님 컴퓨터에서 켜는 판에만 있어요.</p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,5 @@
+{
+  "rabbit": { "name": "토끼", "src": "rabbit.png", "foot": 62, "tagH": 4.3, "hop": 0.18, "faceTop": 0, "by": "픽셀엔진/tools/storybook_chars.py" },
+  "turtle": { "name": "거북이", "src": "turtle.png", "foot": 62, "tagH": 3.2, "hop": 0.06, "faceTop": 10, "by": "픽셀엔진/tools/storybook_chars.py" },
+  "owl": { "name": "부엉이", "src": "owl.png", "foot": 62, "tagH": 3.0, "hop": 0.12, "faceTop": 14, "by": "픽셀엔진/tools/storybook_chars.py" }
+}
