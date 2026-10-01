@@ -81,10 +81,10 @@
 
   // ───── 걷기: 그리지 않고 역할 지도로 몸을 움직인다 ─────
   // 앞에서 본 사람 걸음(10-01 피드백 "게 같다" 반영): 몸통은 그대로(위아래 통통은 엔진이), 좌우로 쏠리지 않는다.
-  //  · 드는 발(side): 무릎을 굽혀 정강이(52줄 아래)를 2칸 들어 올리고 가운데로 1칸(발이 몸 밑으로 모임) / 딛는 발: 그대로 땅에
+  //  · 드는 발(side): 발목 아래(54줄~)만 1칸 살짝 — 10-01 라그나로크 영상 분석: 발은 거의 안 보일 만큼 작게, 걸음은 몸 통통·팔로 / 딛는 발: 그대로
   //  · 마지막에 떨어져 나온 점(이웃이 하나 이하)을 지워 이음새를 깔끔하게
   //  · 팔: 드는 발 반대쪽 팔이 앞으로(손 1칸 위), 같은 쪽 팔은 뒤로(손 1칸 아래) — 옆으로는 안 움직임
-  const HIP = 44, CALF = 48, SHIN = 52, ARM_Y0 = 36, ARM_Y1 = 43;
+  const HIP = 44, FOOT = 54, ARM_Y0 = 36, ARM_Y1 = 43;
   function roleAt(m) { const r = new Map(); for (const [k, pts] of Object.entries(m.roles)) for (const [x, y] of pts) r.set(y * 64 + x, k); return r; }
   function moved(img, roles, side) {
     const src = img.data, out = new Uint8ClampedArray(64 * 64 * 4);
@@ -100,7 +100,7 @@
         layers[2].push(forward ? [x, y, 0, -1, false] : [x, y, 0, 1, true]);
       } else if (y >= HIP) {
         const leg = legSide(x), lift = (leg === 'L') === liftLeft;
-        layers[1].push(lift && y >= SHIN ? [x, y, leg === 'L' ? 1 : -1, -2, false] : [x, y, 0, 0, false]);   // 드는 발만: 정강이 2칸 위·안쪽 1칸
+        layers[1].push(lift && y >= FOOT ? [x, y, 0, -1, false] : [x, y, 0, 0, false]);   // 드는 발만 1칸 살짝(라그나로크식 작은 걸음)
       } else layers[0].push([x, y, 0, 0, false]);
     }
     const put = (sx, sy, tx, ty) => { if (tx < 0 || ty < 0 || tx > 63 || ty > 63) return; const a = (sy * 64 + sx) * 4, b = (ty * 64 + tx) * 4; for (let i = 0; i < 4; i++) out[b + i] = src[a + i]; };
