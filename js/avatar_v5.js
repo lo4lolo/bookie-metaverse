@@ -80,15 +80,15 @@
   }
 
   // ───── 걷기: 그리지 않고 역할 지도로 몸을 움직인다 ─────
-  // 앞으로 나가는 다리(side) = 1칸 길어짐(가까워 보임), 뒤 다리 = 정강이 아래가 2칸 들림(발꿈치 듦)
-  // 윗몸(44줄 위) = 나가는 발 쪽으로 1칸 쏠림, 팔 = 나가는 다리 반대쪽 팔이 앞으로(안쪽·위로), 같은 쪽 팔은 뒤로(아래로 1칸 길게)
-  // 좌우는 v5 몸 자리 기준: 다리 44줄 아래, 가운데 32. 팔 아래쪽 34~43줄, 몸통 바깥(x≤24 / x≥39).
-  const HIP = 44, SHIN = 52, ARM_Y0 = 36, ARM_Y1 = 43;
+  // 앞에서 본 사람 걸음(10-01 피드백 "게 같다" 반영): 몸통은 그대로(위아래 통통은 엔진이), 좌우로 쏠리지 않는다.
+  //  · 드는 발(side): 무릎을 굽혀 정강이(52줄 아래)를 2칸 들어 올리고 가운데로 1칸(발이 몸 밑으로 모임) / 딛는 발: 그대로 땅에
+  //  · 마지막에 떨어져 나온 점(이웃이 하나 이하)을 지워 이음새를 깔끔하게
+  //  · 팔: 드는 발 반대쪽 팔이 앞으로(손 1칸 위), 같은 쪽 팔은 뒤로(손 1칸 아래) — 옆으로는 안 움직임
+  const HIP = 44, CALF = 48, SHIN = 52, ARM_Y0 = 36, ARM_Y1 = 43;
   function roleAt(m) { const r = new Map(); for (const [k, pts] of Object.entries(m.roles)) for (const [x, y] of pts) r.set(y * 64 + x, k); return r; }
   function moved(img, roles, side) {
     const src = img.data, out = new Uint8ClampedArray(64 * 64 * 4);
-    const L = side === 'L', fwdLeft = L;                              // 왼다리가 앞으로?
-    const sway = L ? -1 : 1;
+    const liftLeft = side === 'L';
     const legSide = x => (x < 32 ? 'L' : 'R');
     const armSide = (x, y) => (y >= ARM_Y0 && y <= ARM_Y1 && !['pants', 'shoes'].includes(roles.get(y * 64 + x)) ? (x <= 24 ? 'L' : x >= 39 ? 'R' : null) : null);
     const layers = [[], [], []];                                       // 몸, 다리, 팔 순서로 그림(팔이 맨 위)
@@ -96,19 +96,23 @@
       if (!src[(y * 64 + x) * 4 + 3]) continue;
       const arm = armSide(x, y);
       if (arm) {
-        const forward = (arm === 'L') !== fwdLeft;                     // 나가는 다리 반대쪽 팔이 앞으로
-        const outward = arm === 'L' ? -1 : 1;
-        layers[2].push(forward ? [x, y, sway - outward, -1, false] : [x, y, sway, 1, true]);   // 뒤 팔은 바깥으로 밀면 팔꿈치가 끊겨서 아래로만
+        const forward = (arm === 'L') !== liftLeft;                    // 드는 발 반대쪽 팔이 앞으로
+        layers[2].push(forward ? [x, y, 0, -1, false] : [x, y, 0, 1, true]);
       } else if (y >= HIP) {
-        const front = (legSide(x) === 'L') === fwdLeft;
-        layers[1].push(front ? [x, y, 0, 1, true] : (y >= SHIN ? [x, y, 0, -2, false] : [x, y, 0, 0, false]));
-      } else layers[0].push([x, y, sway, 0, false]);
+        const leg = legSide(x), lift = (leg === 'L') === liftLeft;
+        layers[1].push(lift && y >= SHIN ? [x, y, leg === 'L' ? 1 : -1, -2, false] : [x, y, 0, 0, false]);   // 드는 발만: 정강이 2칸 위·안쪽 1칸
+      } else layers[0].push([x, y, 0, 0, false]);
     }
     const put = (sx, sy, tx, ty) => { if (tx < 0 || ty < 0 || tx > 63 || ty > 63) return; const a = (sy * 64 + sx) * 4, b = (ty * 64 + tx) * 4; for (let i = 0; i < 4; i++) out[b + i] = src[a + i]; };
     for (const layer of layers) for (const [x, y, dx, dy, smear] of layer) {
       put(x, y, x + dx, y + dy);
       if (smear) for (let k = 0; k < dy; k++) put(x, y, x + dx, y + k);   // 내려가면 위 끝을 채워 이어지게
     }
+    // 정리: 다리 쪽(44줄 아래)에서 이웃이 하나 이하인 외톨이 점 지우기
+    const op = (x, y) => x >= 0 && y >= 0 && x < 64 && y < 64 && out[(y * 64 + x) * 4 + 3] > 0;
+    const lone = [];
+    for (let y = HIP; y < 64; y++) for (let x = 0; x < 64; x++) if (op(x, y) && (op(x - 1, y) + op(x + 1, y) + op(x, y - 1) + op(x, y + 1)) <= 1) lone.push((y * 64 + x) * 4);
+    for (const k of lone) out.fill(0, k, k + 4);
     return new ImageData(out, 64, 64);
   }
   /** 192×192 시트(가로: 서기·걷기1·걷기2, 세로: 앞·옆·뒤). 옆모습은 아직 없어서 앞모습으로 대신한다. */

@@ -138,7 +138,7 @@ export class Actor {
     }
     this.mesh.position.y = this.lift + hop + (this.sleeping ? 0.75 : 0);
     let roll = this.sleeping ? Math.PI / 2 * 0.92 : 0, sx = this.flip ? -1 : 1;
-    if (stepping && !this.sleeping && !this.flying) roll += Math.sin(this.t * Math.PI / (beat * 2)) * 0.045;   // 걸을 때 좌우로 살짝 뒤뚱
+    // (뒤뚱거림은 10-01 피드백 「게 같다」로 뺌 — 걸음은 위아래 통통만)
     if (a === '흔들') roll += Math.sin(this.t * 9) * 0.18;
     if (a === '빙글') sx *= Math.cos(this.t * 6);
     this.mesh.rotation.set(0, yaw, roll);
